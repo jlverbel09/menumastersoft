@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Georking Business</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #020617;
+            color: #e2e8f0;
+        }
+        
+        .bg-mesh {
+            background-color: #020617;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(243, 75%, 59%, 0.15) 0, transparent 50%), 
+                radial-gradient(at 100% 100%, hsla(243, 75%, 59%, 0.1) 0, transparent 50%);
+        }
+
+        .input-focus-effect:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 1px #6366f1;
+            outline: none;
+        }
+
+        .side-image {
+            background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-mesh">
+
+    <div class="flex min-h-screen">
+        
+        <!-- Lado Izquierdo: Formulario -->
+        <div class="flex flex-col justify-center flex-1 px-8 py-12 sm:px-12 lg:flex-none lg:px-24 xl:px-32 bg-[#020617]/80 backdrop-blur-xl z-10">
+            <div class="w-full max-w-sm mx-auto lg:w-96">
+                
+                <!-- Logo y Encabezado -->
+                <div class="mb-10">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="bg-indigo-600 p-2 rounded-xl">
+                            <i class="fas fa-chart-line text-white text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold tracking-tight text-white uppercase">
+                            Georking <span class="text-indigo-500">Biz</span>
+                        </span>
+                    </div>
+                    <h2 class="text-3xl font-extrabold text-white">Bienvenido</h2>
+                    <p class="mt-2 text-sm text-slate-400">
+                        Ingresa a tu cuenta para gestionar tus resultados.
+                    </p>
+                </div>
+
+                <!-- Formulario -->
+                <form class="space-y-6">
+                    <div>
+                        <label for="user" class="block text-sm font-medium text-slate-300">Correo o Usuario</label>
+                        <div class="mt-1 relative">
+                            <input id="user" type="text" placeholder="ejemplo@empresa.com" 
+                                class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 input-focus-effect transition-all">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <label for="password" class="block text-sm font-medium text-slate-300">Contraseña</label>
+                            <a href="#" class="text-xs text-indigo-400 hover:text-indigo-300 transition-colors">¿Olvidaste tu contraseña?</a>
+                        </div>
+                        <div class="mt-1 relative">
+                            <input id="password" type="password" placeholder="••••••••" 
+                                class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 input-focus-effect transition-all">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center">
+                        <input id="remember" type="checkbox" class="h-4 w-4 rounded border-slate-800 bg-slate-900 text-indigo-600 focus:ring-indigo-500">
+                        <label for="remember" class="ml-2 block text-sm text-slate-400">Mantener sesión iniciada</label>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="group relative w-full flex justify-center py-3.5 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all shadow-lg shadow-indigo-500/20">
+                            INICIAR SESIÓN
+                            <span class="absolute right-4 group-hover:translate-x-1 transition-transform">
+                                <i class="fas fa-arrow-right"></i>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Footer del Formulario -->
+                <div class="mt-10 border-t border-slate-800 pt-8">
+                    <p class="text-center text-sm text-slate-500 italic px-4">
+                        "Convierte ventas en estadísticas y estadísticas en ganancias."
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lado Derecho: Imagen y Frase -->
+        <div class="hidden lg:block relative flex-1 w-0">
+            <div class="absolute inset-0 h-full w-full side-image">
+                <div class="absolute inset-0 bg-gradient-to-r from-[#020617] via-[#020617]/20 to-transparent"></div>
+                
+                <!-- Contenido Flotante sobre la imagen -->
+                <div class="absolute bottom-20 left-20 max-w-lg">
+                    <div class="bg-indigo-600/10 backdrop-blur-md border border-white/10 p-8 rounded-3xl">
+                        <div class="flex gap-1 mb-4">
+                            <i class="fas fa-star text-yellow-500 text-xs"></i>
+                            <i class="fas fa-star text-yellow-500 text-xs"></i>
+                            <i class="fas fa-star text-yellow-500 text-xs"></i>
+                            <i class="fas fa-star text-yellow-500 text-xs"></i>
+                            <i class="fas fa-star text-yellow-500 text-xs"></i>
+                        </div>
+                        <p class="text-xl text-white font-medium leading-relaxed">
+                            "La mejor herramienta para llevar el control total de mi negocio. El análisis de datos nunca fue tan sencillo."
+                        </p>
+                        <div class="mt-6 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center">
+                                <i class="fas fa-user-tie text-slate-400"></i>
+                            </div>
+                            <div>
+                                <p class="text-white font-bold">Administrador Sede Nazca</p>
+                                <p class="text-slate-400 text-sm">Usuario Verificado</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Georking Business - Obsidian Dark</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --bg-amoled: #050505;
+            --surface-obsidian: #121212;
+            --surface-raised: #1c1c1c;
+            --accent-main: #3b82f6; /* Blue 500 */
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --border-thin: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-amoled);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Obsidian Cards */
+        .obsidian-card {
+            background: var(--surface-obsidian);
+            border: 1px solid var(--border-thin);
+            border-radius: 12px;
+        }
+
+        .app-container {
+            display: flex;
+            height: calc(100vh - 64px);
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        /* Sidebar Minimalista Extremo */
+        .sidebar {
+            width: 72px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: var(--surface-raised);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: var(--accent-main);
+            color: white;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Navigation Header */
+        .top-bar {
+            height: 64px;
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            border-bottom: 1px solid var(--border-thin);
+            background: var(--bg-amoled);
+        }
+
+        /* Category Selector */
+        .cat-chip {
+            padding: 6px 16px;
+            border-radius: 20px;
+            background: var(--surface-obsidian);
+            border: 1px solid var(--border-thin);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .cat-chip:hover {
+            background: var(--surface-raised);
+        }
+
+        .cat-chip.active {
+            background: white;
+            color: black;
+            border-color: white;
+        }
+
+        /* Obsidian Table */
+        .table {
+            color: var(--text-primary);
+            margin-bottom: 0;
+        }
+
+        .table thead th {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-thin);
+        }
+
+        .table tbody td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 14px;
+        }
+
+        .tr-active {
+            background-color: rgba(255, 255, 255, 0.03) !important;
+        }
+
+        /* Info Panel */
+        .info-panel {
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .img-display {
+            width: 100%;
+            aspect-ratio: 16/10;
+            border-radius: 12px;
+            background: var(--surface-raised);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .img-display img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .stat-box {
+            background: var(--surface-raised);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-thin);
+        }
+
+        .custom-scroll::-webkit-scrollbar { width: 5px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--surface-raised); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <header class="top-bar">
+        <div class="d-flex align-items-center gap-3">
+            <div class="bg-white rounded p-1">
+                <i data-lucide="zap" class="text-black" size="18"></i>
+            </div>
+            <span class="fw-bold tracking-tight">GEORKING <span class="text-secondary fw-normal">CONSOLE</span></span>
+        </div>
+        
+        <div class="ms-auto d-flex gap-4 align-items-center">
+            <div class="d-flex gap-2">
+                <div class="cat-chip active">Todos</div>
+                <div class="cat-chip">Cocina</div>
+                <div class="cat-chip">Bebidas</div>
+                <div class="cat-chip">Postres</div>
+            </div>
+            <div class="vr mx-2 opacity-25"></div>
+            <i data-lucide="search" size="20" class="text-secondary"></i>
+            <i data-lucide="bell" size="20" class="text-secondary"></i>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <!-- Sidebar Obsidian -->
+        <nav class="sidebar obsidian-card">
+            <a href="#" class="nav-item"><i data-lucide="home"></i></a>
+            <a href="#" class="nav-item active"><i data-lucide="package"></i></a>
+            <a href="#" class="nav-item"><i data-lucide="shopping-bag"></i></a>
+            <a href="#" class="nav-item"><i data-lucide="users"></i></a>
+            <a href="#" class="nav-item mt-auto"><i data-lucide="settings"></i></a>
+        </nav>
+
+        <!-- Product Table Area -->
+        <main class="flex-grow-1 obsidian-card overflow-hidden d-flex flex-column">
+            <div class="p-3 d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold">Inventario Maestro</h6>
+                <button class="btn btn-sm btn-primary px-3 py-2 fw-semibold" style="background: var(--accent-main); border:none;">
+                    + Nuevo Producto
+                </button>
+            </div>
+            <div class="flex-grow-1 overflow-auto custom-scroll">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Ref</th>
+                            <th>Item</th>
+                            <th class="text-end">Costo</th>
+                            <th class="text-end">Precio</th>
+                            <th>Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody id="product-list">
+                        <!-- Render via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <!-- Detailed Inspector -->
+        <aside class="info-panel obsidian-card p-4">
+            <div id="inspector-content" class="h-100 d-flex flex-column">
+                <!-- Render via JS -->
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        const items = [
+            { id: 101, nombre: 'Arroz Aeropuerto', precio: 14.90, costo: 5.20, stock: 45, img: 'https://images.unsplash.com/photo-1512058560366-c847e0581d26?auto=format&fit=crop&q=80&w=600', desc: 'Receta tradicional al wok con toques ahumados.' },
+            { id: 102, nombre: 'Ceviche Clásico', precio: 18.50, costo: 7.10, stock: 12, img: 'https://images.unsplash.com/photo-1534422298391-e4f8c170db76?auto=format&fit=crop&q=80&w=600', desc: 'Pescado fresco marinado en limón de pica.' },
+            { id: 103, nombre: 'Agua Artesana', precio: 2.50, costo: 0.40, stock: 120, img: 'https://images.unsplash.com/photo-1548919973-5dea58593735?auto=format&fit=crop&q=80&w=600', desc: 'Agua de manantial filtrada.' }
+        ];
+
+        let selected = 101;
+
+        function render() {
+            const list = document.getElementById('product-list');
+            list.innerHTML = items.map(p => `
+                <tr onclick="select(${p.id})" class="cursor-pointer ${selected === p.id ? 'tr-active' : ''}">
+                    <td class="text-secondary font-monospace">#${p.id}</td>
+                    <td class="fw-medium">${p.nombre}</td>
+                    <td class="text-end text-secondary">€ ${p.costo.toFixed(2)}</td>
+                    <td class="text-end fw-bold">€ ${p.precio.toFixed(2)}</td>
+                    <td class="${p.stock < 20 ? 'text-danger' : 'text-success'}">${p.stock} ud</td>
+                </tr>
+            `).join('');
+
+            const p = items.find(x => x.id === selected);
+            const inspector = document.getElementById('inspector-content');
+            inspector.innerHTML = `
+                <div class="img-display">
+                    <img src="${p.img}">
+                </div>
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <h5 class="fw-bold mb-0">${p.nombre}</h5>
+                        <span class="badge bg-secondary opacity-50">SKU-${p.id}</span>
+                    </div>
+                    <p class="small text-secondary">${p.desc}</p>
+                </div>
+                
+                <div class="stat-grid mb-4">
+                    <div class="stat-box">
+                        <small class="text-secondary d-block mb-1">Márgen</small>
+                        <span class="fw-bold text-success">${((p.precio - p.costo)/p.precio * 100).toFixed(1)}%</span>
+                    </div>
+                    <div class="stat-box">
+                        <small class="text-secondary d-block mb-1">Beneficio</small>
+                        <span class="fw-bold">€ ${(p.precio - p.costo).toFixed(2)}</span>
+                    </div>
+                </div>
+
+                <div class="mt-auto pt-3 border-top border-white border-opacity-10">
+                    <button class="btn btn-outline-light w-100 mb-2 border-opacity-10 py-2 small">Editar Ficha</button>
+                    <button class="btn btn-primary w-100 py-2 small" style="background: var(--accent-main); border:none;">Registrar Venta</button>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function select(id) { selected = id; render(); }
+        window.onload = render;
+    </script>
+</body>
+</html>

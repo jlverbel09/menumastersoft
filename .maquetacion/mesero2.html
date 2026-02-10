@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesero App | MenuMasterSoft</title>
+    <!-- Bootstrap 5 & Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --color-principal: #0984E3;
+            --color-secundario: #6c5ce7;
+            --color-alerta: #e17055;
+            --color-exito: #00b894;
+            --bg-app: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-app);
+            color: #2d3436;
+            margin: 0;
+            padding-bottom: 90px;
+            user-select: none;
+        }
+
+        /* Header */
+        .app-header {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .user-status {
+            width: 10px;
+            height: 10px;
+            background: var(--color-exito);
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        /* Notificaciones Rápidas */
+        .alert-banner {
+            background: var(--color-alerta);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        /* Grid de Mesas */
+        .mesa-card {
+            background: white;
+            border-radius: 18px;
+            padding: 15px;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.1s;
+            position: relative;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .mesa-card:active {
+            transform: scale(0.96);
+        }
+
+        .mesa-card.ocupada {
+            border-left: 5px solid var(--color-principal);
+        }
+
+        .mesa-card.libre {
+            border-left: 5px solid #dfe6e9;
+        }
+
+        .mesa-card.atencion {
+            border-left: 5px solid var(--color-alerta);
+            background: #fffafa;
+        }
+
+        .mesa-numero {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .mesa-status-text {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Avisos de Notificación */
+        .notif-dot {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            background: var(--color-alerta);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            text-align: center;
+            color: #b2bec3;
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .nav-item.active {
+            color: var(--color-principal);
+        }
+
+        .nav-item i {
+            display: block;
+            font-size: 1.4rem;
+            margin-bottom: 2px;
+        }
+
+        /* Fab */
+        .fab {
+            width: 56px;
+            height: 56px;
+            background: var(--color-principal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(9, 132, 227, 0.4);
+            position: fixed;
+            bottom: 85px;
+            right: 20px;
+            z-index: 999;
+        }
+
+        .tiempo-espera {
+            font-size: 0.7rem;
+            color: #636e72;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #b2bec3;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Banner de Notificación Activa -->
+    <div class="alert-banner" onclick="this.style.display='none'">
+        <i class="bi bi-bell-fill me-2"></i> Mesa 3: Cliente solicita atención inmediata
+    </div>
+
+    <!-- Header App -->
+    <header class="app-header d-flex justify-content-between align-items-center">
+        <div>
+            <p class="m-0 text-muted small">Mesero en turno</p>
+            <div class="d-flex align-items-center">
+                <span class="user-status"></span>
+                <span class="fw-bold">Juan Pérez</span>
+            </div>
+        </div>
+        <div class="position-relative">
+            <i class="bi bi-person-circle fs-2 text-muted"></i>
+            <span class="notif-dot">3</span>
+        </div>
+    </header>
+
+    <div class="container py-4">
+        <div class="section-title">Estado de Mesas</div>
+        <div class="row g-3">
+            <!-- Mesa Ocupada -->
+            <div class="col-6">
+                <div class="mesa-card ocupada">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <span class="mesa-numero">01</span>
+                        <span class="badge rounded-pill bg-primary" style="font-size: 0.6rem;">$1,240</span>
+                    </div>
+                    <div>
+                        <div class="mesa-status-text text-primary">Comiendo</div>
+                        <div class="tiempo-espera"><i class="bi bi-clock me-1"></i> 45 min</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mesa con Alerta (Notificación Visual) -->
+            <div class="col-6">
+                <div class="mesa-card atencion">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <span class="mesa-numero text-danger">03</span>
+                        <div class="spinner-grow text-danger" role="status" style="width: 10px; height: 10px;"></div>
+                    </div>
+                    <div>
+                        <div class="mesa-status-text text-danger">Llamando...</div>
+                        <div class="tiempo-espera text-danger fw-bold">Hace 2 min</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mesa con Cuenta Pedida -->
+            <div class="col-6">
+                <div class="mesa-card ocupada" style="border-left-color: var(--color-secundario);">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <span class="mesa-numero">04</span>
+                        <i class="bi bi-receipt-cutoff text-secondary"></i>
+                    </div>
+                    <div>
+                        <div class="mesa-status-text" style="color: var(--color-secundario);">Pide Cuenta</div>
+                        <div class="tiempo-espera fw-bold">$2,850.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mesa Libre -->
+            <div class="col-6">
+                <div class="mesa-card libre">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <span class="mesa-numero text-muted">02</span>
+                    </div>
+                    <div>
+                        <div class="mesa-status-text text-muted">Disponible</div>
+                        <div class="tiempo-espera">Limpia</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel de Notificaciones de Cocina -->
+        <div class="mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="section-title m-0">Avisos de Cocina</div>
+                <span class="badge bg-success rounded-pill">2 Listos</span>
+            </div>
+
+            <div class="card border-0 rounded-4 p-3 mb-2 shadow-sm" style="background: #f0fff4; border-left: 4px solid var(--color-exito) !important;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="fw-bold">Mesa 05</span>
+                        <p class="m-0 text-muted small">1x Fettuccine Alfredo (LISTO)</p>
+                    </div>
+                    <button class="btn btn-sm btn-success rounded-pill">Entregar</button>
+                </div>
+            </div>
+
+            <div class="card border-0 rounded-4 p-3 mb-2 shadow-sm">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="fw-bold">Mesa 01</span>
+                        <p class="m-0 text-muted small">2x Burger (En preparación)</p>
+                    </div>
+                    <span class="text-muted small">10 min</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón Nuevo Pedido -->
+    <div class="fab">
+        <i class="bi bi-plus-lg"></i>
+    </div>
+
+    <!-- Navegación Inferior con Burbujas -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active">
+            <i class="bi bi-grid-fill"></i>
+            Salón
+        </a>
+        <a href="#" class="nav-item">
+            <i class="bi bi-receipt"></i>
+            Pedidos
+        </a>
+        <a href="#" class="nav-item">
+            <i class="bi bi-chat-dots-fill"></i>
+            Avisos
+            <span class="notif-dot" style="top: -2px; right: 8px;">2</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="bi bi-gear"></i>
+            Ajustes
+        </a>
+    </nav>
+
+</body>
+</html>

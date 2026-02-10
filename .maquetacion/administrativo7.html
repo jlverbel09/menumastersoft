@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Ajustes | MenuMasterSoft</title>
+    <!-- Bootstrap 5 & Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --color-principal: #0984E3;
+            --azul-oscuro: #0a3d62;
+            --bg-admin: #f1f2f6;
+            --sidebar-width: 240px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-admin);
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--azul-oscuro);
+            color: white;
+            padding: 20px;
+            flex-shrink: 0;
+        }
+
+        .admin-logo {
+            height: 35px;
+            margin-bottom: 30px;
+            filter: brightness(0) invert(1);
+        }
+
+        /* Contenedor Principal */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        /* Tarjetas de Ajustes */
+        .settings-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            margin-bottom: 25px;
+        }
+
+        .settings-header {
+            border-bottom: 1px solid #f1f2f6;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+        }
+
+        .nav-settings {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .settings-tab {
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: #636e72;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .settings-tab.active {
+            background: rgba(9, 132, 227, 0.1);
+            color: var(--color-principal);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #2d3436;
+            font-size: 0.9rem;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            padding: 10px 15px;
+            border: 1px solid #dfe6e9;
+        }
+
+        .form-control:focus {
+            border-color: var(--color-principal);
+            box-shadow: 0 0 0 3px rgba(9, 132, 227, 0.1);
+        }
+
+        /* Estilos de Tabla de Usuarios */
+        .user-table th {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b2bec3;
+            border: none;
+        }
+
+        .user-avatar-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--color-principal);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .role-badge {
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-admin { background: rgba(9, 132, 227, 0.1); color: var(--color-principal); }
+        .badge-mesero { background: rgba(230, 126, 34, 0.1); color: #e67e22; }
+        .badge-cocina { background: rgba(46, 204, 113, 0.1); color: #2ecc71; }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <img src="https://i.ibb.co/Lz0D7xR/Menu-Master-Soft-Logo.png" alt="MenuMasterSoft" class="admin-logo">
+        <nav class="nav flex-column gap-2 mt-4">
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-grid-3x3-gap me-2"></i> Gestión de Mesas</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-receipt me-2"></i> Pedidos</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-cup-hot me-2"></i> Menú Digital</a>
+            <a class="nav-link text-white active fw-bold" href="#"><i class="bi bi-gear me-2"></i> Ajustes</a>
+        </nav>
+    </div>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <div class="mb-4">
+            <h3 class="fw-bold m-0">Ajustes del Sistema</h3>
+            <p class="text-muted small">Configura las preferencias de tu restaurante</p>
+        </div>
+
+        <div class="nav-settings">
+            <a href="#" class="settings-tab">General</a>
+            <a href="#" class="settings-tab active">Usuarios y Roles</a>
+            <a href="#" class="settings-tab">Facturación</a>
+            <a href="#" class="settings-tab">Notificaciones</a>
+        </div>
+
+        <div class="row">
+            <!-- Sección Detallada de Usuarios y Roles -->
+            <div class="col-md-12">
+                <div class="settings-card">
+                    <div class="settings-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="fw-bold m-0"><i class="bi bi-people me-2"></i> Gestión de Personal</h5>
+                            <p class="text-muted small m-0">Controla quién tiene acceso al sistema y sus permisos</p>
+                        </div>
+                        <button class="btn btn-primary rounded-pill px-4" style="background-color: var(--color-principal);">
+                            <i class="bi bi-person-plus me-2"></i> Nuevo Usuario
+                        </button>
+                    </div>
+
+                    <div class="table-responsive mt-4">
+                        <table class="table align-middle user-table">
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Rol / Nivel</th>
+                                    <th>Correo Electrónico</th>
+                                    <th>Estado</th>
+                                    <th>Último Acceso</th>
+                                    <th class="text-end">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Admin -->
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="user-avatar-sm">AD</div>
+                                            <span class="fw-bold">Admin Principal</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="role-badge badge-admin">Administrador</span></td>
+                                    <td>admin@menumaster.com</td>
+                                    <td><span class="text-success small fw-bold"><i class="bi bi-circle-fill me-1" style="font-size: 0.5rem;"></i> Activo</span></td>
+                                    <td class="text-muted small">Hace 2 minutos</td>
+                                    <td class="text-end">
+                                        <button class="btn btn-sm btn-light border"><i class="bi bi-pencil"></i></button>
+                                    </td>
+                                </tr>
+                                <!-- Mesero -->
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="user-avatar-sm" style="background-color: #e67e22;">JP</div>
+                                            <span class="fw-bold">Juan Pérez</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="role-badge badge-mesero">Mesero (Capitán)</span></td>
+                                    <td>juan.p@menumaster.com</td>
+                                    <td><span class="text-success small fw-bold"><i class="bi bi-circle-fill me-1" style="font-size: 0.5rem;"></i> Activo</span></td>
+                                    <td class="text-muted small">Hoy, 10:15 AM</td>
+                                    <td class="text-end">
+                                        <button class="btn btn-sm btn-light border me-1"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-sm btn-light border text-danger"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <!-- Cocina -->
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="user-avatar-sm" style="background-color: #2ecc71;">MC</div>
+                                            <span class="fw-bold">Maria Chef</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="role-badge badge-cocina">Cocinero Jefe</span></td>
+                                    <td>maria.c@menumaster.com</td>
+                                    <td><span class="text-success small fw-bold"><i class="bi bi-circle-fill me-1" style="font-size: 0.5rem;"></i> Activo</span></td>
+                                    <td class="text-muted small">Ayer, 06:30 PM</td>
+                                    <td class="text-end">
+                                        <button class="btn btn-sm btn-light border me-1"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-sm btn-light border text-danger"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <!-- Usuario Desactivado -->
+                                <tr class="opacity-75">
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="user-avatar-sm bg-secondary">RL</div>
+                                            <span class="fw-bold">Ricardo Luna</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="role-badge bg-light text-muted border">Mesero</span></td>
+                                    <td>ricardo.l@menumaster.com</td>
+                                    <td><span class="text-muted small fw-bold"><i class="bi bi-circle-fill me-1" style="font-size: 0.5rem;"></i> Inactivo</span></td>
+                                    <td class="text-muted small">15 Oct, 2023</td>
+                                    <td class="text-end">
+                                        <button class="btn btn-sm btn-light border me-1"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-sm btn-light border text-primary"><i class="bi bi-arrow-repeat"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Resumen de Permisos por Rol -->
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <h6 class="fw-bold m-0">Matriz de Permisos Rápidos</h6>
+                    </div>
+                    <div class="row g-4 mt-1">
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded-4 bg-light">
+                                <p class="fw-bold mb-2 small"><i class="bi bi-shield-lock me-2 text-primary"></i> Administrador</p>
+                                <ul class="list-unstyled mb-0 small text-muted">
+                                    <li><i class="bi bi-check2 text-success me-1"></i> Control total del sistema</li>
+                                    <li><i class="bi bi-check2 text-success me-1"></i> Reportes financieros</li>
+                                    <li><i class="bi bi-check2 text-success me-1"></i> Gestión de menú y precios</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded-4">
+                                <p class="fw-bold mb-2 small"><i class="bi bi-person-badge me-2 text-warning"></i> Mesero</p>
+                                <ul class="list-unstyled mb-0 small text-muted">
+                                    <li><i class="bi bi-check2 text-success me-1"></i> Toma de pedidos</li>
+                                    <li><i class="bi bi-check2 text-success me-1"></i> Gestión de sus mesas</li>
+                                    <li><i class="bi bi-x-lg text-danger me-1"></i> Sin acceso a reportes</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded-4">
+                                <p class="fw-bold mb-2 small"><i class="bi bi-fire me-2 text-success"></i> Cocina</p>
+                                <ul class="list-unstyled mb-0 small text-muted">
+                                    <li><i class="bi bi-check2 text-success me-1"></i> Ver monitor de pedidos</li>
+                                    <li><i class="bi bi-check2 text-success me-1"></i> Marcar platos listos</li>
+                                    <li><i class="bi bi-x-lg text-danger me-1"></i> Sin acceso a cajas/cobros</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de Acción Fijos -->
+        <div class="d-flex justify-content-end gap-3 mt-4 mb-5">
+            <button class="btn btn-light rounded-pill px-4 border">Descartar Cambios</button>
+            <button class="btn btn-primary rounded-pill px-5" style="background-color: var(--color-principal);">Guardar Usuarios</button>
+        </div>
+    </main>
+
+</body>
+</html>

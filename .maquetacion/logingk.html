@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Georking Business</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow: hidden;
+        }
+        
+        /* Fondo con imagen y overlay */
+        .login-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80'); /* Imagen espacial/tecnológica de fondo */
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+
+        /* Capa de bocetos (simulada con overlay decorativo) */
+        .sketch-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9));
+            z-index: -1;
+        }
+
+        /* Estilo Glassmorphism para el card */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .input-dark {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+
+        .input-dark:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+            outline: none;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased flex items-center justify-center h-screen">
+
+    <div class="login-bg"></div>
+    <div class="sketch-overlay"></div>
+
+    <!-- Contenedor del Login -->
+    <div class="w-full max-w-md px-4">
+        <div class="glass-card rounded-3xl p-10 text-center">
+            
+            <!-- Logotipo Simulado -->
+            <div class="inline-flex items-center justify-center p-4 bg-indigo-600/20 rounded-2xl mb-6 border border-indigo-500/30">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#6366f1"/>
+                    <path d="M12 17.77L18.18 21.02L17 14.14L22 9.27L15.09 8.26L12 2V17.77Z" fill="#4f46e5"/>
+                    <circle cx="12" cy="12" r="3" fill="#0f172a" stroke="#818cf8" stroke-width="2"/>
+                </svg>
+            </div>
+
+            <h1 class="text-2xl font-bold tracking-tight text-white mb-2 uppercase">
+                Georking <span class="font-light text-slate-400">Business</span>
+            </h1>
+            <p class="text-slate-400 text-sm italic mb-8 px-4">
+                "Convierte ventas en estadísticas y estadísticas en ganancias."
+            </p>
+
+            <!-- Formulario -->
+            <form class="text-left space-y-5">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-2 ml-1">Usuario</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                        <input type="text" placeholder="Ingresa tu correo o usuario" class="input-dark w-full pl-10 pr-4 py-3 rounded-xl text-sm placeholder-slate-600">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-2 ml-1">Contraseña</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <input type="password" placeholder="Ingresa tu contraseña" class="input-dark w-full pl-10 pr-12 py-3 rounded-xl text-sm placeholder-slate-600">
+                        <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-600 hover:text-indigo-400">
+                            <i class="fas fa-eye text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between text-xs px-1">
+                    <label class="flex items-center gap-2 cursor-pointer text-slate-500 hover:text-slate-300">
+                        <input type="checkbox" class="accent-indigo-600 rounded"> Recordarme
+                    </label>
+                    <a href="#" class="text-indigo-400 hover:text-indigo-300 transition-colors">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <button type="button" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-indigo-500/20 transition-all transform active:scale-[0.98] mt-4 uppercase tracking-wider text-sm">
+                    Iniciar Sesión
+                </button>
+            </form>
+
+            <div class="mt-8 text-center">
+                <p class="text-xs text-slate-500">
+                    ¿No tienes una cuenta? <a href="#" class="text-indigo-400 font-semibold hover:underline">Solicita acceso</a>
+                </p>
+            </div>
+        </div>
+        
+        <!-- Footer decorativo -->
+        <p class="mt-8 text-center text-slate-600 text-[10px] uppercase tracking-[0.2em]">
+            © 2024 Georking Tech Solutions
+        </p>
+    </div>
+
+</body>
+</html>

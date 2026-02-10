@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Gestión de Menú | MenuMasterSoft</title>
+    <!-- Bootstrap 5 & Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --color-principal: #0984E3;
+            --azul-oscuro: #0a3d62;
+            --bg-admin: #f1f2f6;
+            --sidebar-width: 240px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-admin);
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar de navegación */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--azul-oscuro);
+            color: white;
+            padding: 20px;
+            flex-shrink: 0;
+        }
+
+        .admin-logo {
+            height: 35px;
+            margin-bottom: 30px;
+            filter: brightness(0) invert(1);
+        }
+
+        /* Contenedor Principal */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Cabecera de Menú */
+        .menu-header {
+            background: white;
+            padding: 20px 25px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        /* Filtros por Categoría */
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .cat-tab {
+            background: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            color: #636e72;
+            text-decoration: none;
+            font-weight: 600;
+            white-space: nowrap;
+            border: 1px solid #dee2e6;
+            transition: all 0.2s;
+        }
+
+        .cat-tab.active {
+            background: var(--color-principal);
+            color: white;
+            border-color: var(--color-principal);
+        }
+
+        /* Tarjetas de Producto */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border: 1px solid #eee;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .product-img {
+            height: 160px;
+            width: 100%;
+            object-fit: cover;
+            background: #eee;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-price {
+            color: var(--color-principal);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .availability-switch {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px solid #f1f2f6;
+            margin-top: 10px;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--color-principal);
+            border-color: var(--color-principal);
+        }
+
+        .btn-edit {
+            padding: 5px 10px;
+            font-size: 0.85rem;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <img src="https://i.ibb.co/Lz0D7xR/Menu-Master-Soft-Logo.png" alt="MenuMasterSoft" class="admin-logo">
+        <nav class="nav flex-column gap-2 mt-4">
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-grid-3x3-gap me-2"></i> Gestión de Mesas</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-receipt me-2"></i> Pedidos</a>
+            <a class="nav-link text-white active fw-bold" href="#"><i class="bi bi-cup-hot me-2"></i> Menú Digital</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-gear me-2"></i> Ajustes</a>
+        </nav>
+    </div>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <div class="menu-header">
+            <div>
+                <h4 class="fw-bold m-0">Catálogo de Productos</h4>
+                <p class="text-muted small m-0">Gestiona tus platillos y disponibilidad</p>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-secondary rounded-pill px-3">
+                    <i class="bi bi-folder-plus me-2"></i> Nueva Categoría
+                </button>
+                <button class="btn btn-primary rounded-pill px-4" style="background-color: var(--color-principal);">
+                    <i class="bi bi-plus-lg me-2"></i> Añadir Platillo
+                </button>
+            </div>
+        </div>
+
+        <!-- Categorías -->
+        <div class="category-tabs">
+            <a href="#" class="cat-tab active">Todos</a>
+            <a href="#" class="cat-tab">🔥 Platos Fuertes</a>
+            <a href="#" class="cat-tab">🥗 Entradas</a>
+            <a href="#" class="cat-tab">🍹 Bebidas</a>
+            <a href="#" class="cat-tab">🍰 Postres</a>
+            <a href="#" class="cat-tab">🍷 Vinos</a>
+        </div>
+
+        <!-- Grid de Productos -->
+        <div class="products-grid">
+            
+            <!-- Producto 1 -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400" alt="Corte de Carne" class="product-img">
+                <div class="product-info">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="fw-bold m-0">Tomahawk Prime</h6>
+                            <small class="text-muted">Platos Fuertes</small>
+                        </div>
+                        <span class="product-price">$850</span>
+                    </div>
+                    <p class="small text-muted mt-2 mb-0">Corte de 1kg a la parrilla con mantequilla de romero.</p>
+                    
+                    <div class="availability-switch">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" checked id="sw1">
+                            <label class="form-check-label small" for="sw1">Disponible</label>
+                        </div>
+                        <button class="btn btn-light btn-edit border"><i class="bi bi-pencil"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Producto 2 -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400" alt="Pizza" class="product-img">
+                <div class="product-info">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="fw-bold m-0">Pizza Burrata</h6>
+                            <small class="text-muted">Platos Fuertes</small>
+                        </div>
+                        <span class="product-price">$240</span>
+                    </div>
+                    <p class="small text-muted mt-2 mb-0">Masa madre, albahaca fresca y queso burrata.</p>
+                    
+                    <div class="availability-switch">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" checked id="sw2">
+                            <label class="form-check-label small" for="sw2">Disponible</label>
+                        </div>
+                        <button class="btn btn-light btn-edit border"><i class="bi bi-pencil"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Producto 3 -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400" alt="Coctel" class="product-img">
+                <div class="product-info">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="fw-bold m-0">Margarita Clásica</h6>
+                            <small class="text-muted">Bebidas</small>
+                        </div>
+                        <span class="product-price">$120</span>
+                    </div>
+                    <p class="small text-muted mt-2 mb-0">Tequila reposado, triple seco y limón.</p>
+                    
+                    <div class="availability-switch">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" checked id="sw3">
+                            <label class="form-check-label small" for="sw3">Disponible</label>
+                        </div>
+                        <button class="btn btn-light btn-edit border"><i class="bi bi-pencil"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Producto 4 (No disponible) -->
+            <div class="product-card opacity-75">
+                <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400" alt="Postre" class="product-img">
+                <div class="product-info">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="fw-bold m-0">Dona Glaseada</h6>
+                            <small class="text-muted">Postres</small>
+                        </div>
+                        <span class="product-price">$45</span>
+                    </div>
+                    <p class="small text-muted mt-2 mb-0">Rellena de crema pastelera casera.</p>
+                    
+                    <div class="availability-switch">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sw4">
+                            <label class="form-check-label small text-danger" for="sw4">Agotado</label>
+                        </div>
+                        <button class="btn btn-light btn-edit border"><i class="bi bi-pencil"></i></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>

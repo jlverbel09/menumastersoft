@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Gestión de Mesas | MenuMasterSoft</title>
+    <!-- Bootstrap 5 & Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --color-principal: #0984E3;
+            --azul-oscuro: #0a3d62;
+            --bg-admin: #f1f2f6;
+            --status-disponible: #2ecc71;
+            --status-ocupado: #e74c3c;
+            --status-atendiendo: #f1c40f;
+            --status-cuenta: #9b59b6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-admin);
+            margin: 0;
+            display: flex;
+        }
+
+        /* Sidebar simple */
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            background: var(--azul-oscuro);
+            color: white;
+            padding: 20px;
+            position: fixed;
+        }
+
+        .main-content {
+            margin-left: 260px;
+            padding: 30px;
+            width: 100%;
+        }
+
+        .admin-logo {
+            height: 40px;
+            margin-bottom: 30px;
+        }
+
+        /* Grid de Mesas */
+        .mesas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .mesa-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mesa-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+
+        .mesa-numero {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .mesa-info {
+            font-size: 0.85rem;
+            color: #636e72;
+        }
+
+        .mesa-monto {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-principal);
+            margin-top: 10px;
+        }
+
+        /* Estados */
+        .bg-disponible { background-color: var(--status-disponible); }
+        .bg-ocupado { background-color: var(--status-ocupado); }
+        .bg-atendiendo { background-color: var(--status-atendiendo); }
+        .bg-cuenta { background-color: var(--status-cuenta); }
+
+        .badge-status {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: 5px;
+            color: white;
+            font-weight: 700;
+        }
+
+        /* Resumen Stats */
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar de Administración -->
+    <div class="sidebar">
+        <img src="https://i.ibb.co/Lz0D7xR/Menu-Master-Soft-Logo.png" alt="Logo" class="admin-logo" style="filter: brightness(0) invert(1);">
+        <nav class="nav flex-column gap-2">
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+            <a class="nav-link text-white active fw-bold" href="#"><i class="bi bi-grid-3x3-gap me-2"></i> Gestión de Mesas</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-receipt me-2"></i> Pedidos</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-cup-hot me-2"></i> Menú Digital</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-people me-2"></i> Usuarios</a>
+            <hr>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-gear me-2"></i> Configuración</a>
+        </nav>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="fw-bold m-0">Monitor de Mesas</h3>
+                <p class="text-muted small m-0">Estado actual del salón en tiempo real</p>
+            </div>
+            <button class="btn btn-primary" style="background-color: var(--color-principal); border: none; border-radius: 10px;">
+                <i class="bi bi-plus-lg me-2"></i> Abrir Nueva Mesa
+            </button>
+        </div>
+
+        <!-- Resumen Rápido -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-disponible"><i class="bi bi-check-circle"></i></div>
+                    <div><h4 class="m-0 fw-bold">12</h4><p class="m-0 text-muted small">Disponibles</p></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-ocupado"><i class="bi bi-person-fill"></i></div>
+                    <div><h4 class="m-0 fw-bold">5</h4><p class="m-0 text-muted small">Ocupadas</p></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-atendiendo"><i class="bi bi-bell-fill"></i></div>
+                    <div><h4 class="m-0 fw-bold">2</h4><p class="m-0 text-muted small">Llamando</p></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-cuenta"><i class="bi bi-currency-dollar"></i></div>
+                    <div><h4 class="m-0 fw-bold">3</h4><p class="m-0 text-muted small">En Cuenta</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid de Mesas -->
+        <div class="mesas-grid">
+            <!-- Mesa 1 -->
+            <div class="mesa-card">
+                <div class="status-bar bg-disponible"></div>
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="mesa-numero">01</div>
+                    <span class="badge-status bg-disponible">Libre</span>
+                </div>
+                <p class="mesa-info mt-2">Capacidad: 4 personas</p>
+                <div class="mesa-monto">$0.00</div>
+            </div>
+
+            <!-- Mesa 2 -->
+            <div class="mesa-card">
+                <div class="status-bar bg-ocupado"></div>
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="mesa-numero">02</div>
+                    <span class="badge-status bg-ocupado">Ocupada</span>
+                </div>
+                <p class="mesa-info mt-2"><i class="bi bi-clock me-1"></i> 45 min transcurridos</p>
+                <div class="mesa-monto text-danger">$1,250.00</div>
+            </div>
+
+            <!-- Mesa 3 -->
+            <div class="mesa-card">
+                <div class="status-bar bg-atendiendo"></div>
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="mesa-numero">03</div>
+                    <span class="badge-status bg-atendiendo">Atención</span>
+                </div>
+                <p class="mesa-info mt-2 text-warning fw-bold">¡Llamando al mesero!</p>
+                <div class="mesa-monto">$840.00</div>
+            </div>
+
+            <!-- Mesa 4 -->
+            <div class="mesa-card">
+                <div class="status-bar bg-cuenta"></div>
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="mesa-numero">04</div>
+                    <span class="badge-status bg-cuenta">Cuenta</span>
+                </div>
+                <p class="mesa-info mt-2">Esperando pago</p>
+                <div class="mesa-monto fw-bold text-dark">$3,100.00</div>
+            </div>
+
+            <!-- Mesa 5 -->
+            <div class="mesa-card">
+                <div class="status-bar bg-ocupado"></div>
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="mesa-numero">05</div>
+                    <span class="badge-status bg-ocupado">Ocupada</span>
+                </div>
+                <p class="mesa-info mt-2"><i class="bi bi-clock me-1"></i> 15 min transcurridos</p>
+                <div class="mesa-monto">$520.00</div>
+            </div>
+            
+            <!-- Agrega más mesas según sea necesario -->
+        </div>
+    </div>
+
+</body>
+</html>

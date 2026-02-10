@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Dashboard | MenuMasterSoft</title>
+    <!-- Bootstrap 5 & Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --color-principal: #0984E3;
+            --azul-oscuro: #0a3d62;
+            --bg-admin: #f1f2f6;
+            --sidebar-width: 240px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-admin);
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--azul-oscuro);
+            color: white;
+            padding: 20px;
+            flex-shrink: 0;
+        }
+
+        .admin-logo {
+            height: 35px;
+            margin-bottom: 30px;
+            filter: brightness(0) invert(1);
+        }
+
+        /* Contenedor Principal */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        /* Tarjetas de Métricas */
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .bg-light-blue { background-color: rgba(9, 132, 227, 0.1); color: var(--color-principal); }
+        .bg-light-green { background-color: rgba(46, 204, 113, 0.1); color: #2ecc71; }
+        .bg-light-orange { background-color: rgba(230, 126, 34, 0.1); color: #e67e22; }
+        .bg-light-purple { background-color: rgba(155, 89, 182, 0.1); color: #9b59b6; }
+
+        /* Gráficos / Listas */
+        .panel-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            height: 100%;
+        }
+
+        .dish-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f2f6;
+        }
+
+        .dish-item:last-child { border-bottom: none; }
+
+        .dish-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .trend-up { color: #2ecc71; font-size: 0.8rem; }
+        .trend-down { color: #e74c3c; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <img src="https://i.ibb.co/Lz0D7xR/Menu-Master-Soft-Logo.png" alt="MenuMasterSoft" class="admin-logo">
+        <nav class="nav flex-column gap-2 mt-4">
+            <a class="nav-link text-white active fw-bold" href="#"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-grid-3x3-gap me-2"></i> Gestión de Mesas</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-receipt me-2"></i> Pedidos</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-cup-hot me-2"></i> Menú Digital</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-gear me-2"></i> Ajustes</a>
+        </nav>
+    </div>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="fw-bold m-0">Dashboard General</h3>
+                <p class="text-muted small m-0">Resumen operativo de hoy, 24 de Octubre</p>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-white bg-white border rounded-pill px-3 shadow-sm">
+                    <i class="bi bi-calendar3 me-2"></i> Últimos 7 días
+                </button>
+                <button class="btn btn-primary rounded-pill px-4 shadow-sm" style="background-color: var(--color-principal); border: none;">
+                    <i class="bi bi-download me-2"></i> Reporte
+                </button>
+            </div>
+        </div>
+
+        <!-- Fila de Métricas -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-light-blue"><i class="bi bi-currency-dollar"></i></div>
+                    <div>
+                        <h4 class="fw-bold m-0">$4,250</h4>
+                        <p class="text-muted small m-0">Ventas de Hoy</p>
+                        <span class="trend-up"><i class="bi bi-graph-up-arrow"></i> +12%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-light-green"><i class="bi bi-bag-check"></i></div>
+                    <div>
+                        <h4 class="fw-bold m-0">84</h4>
+                        <p class="text-muted small m-0">Pedidos Totales</p>
+                        <span class="trend-up"><i class="bi bi-graph-up-arrow"></i> +5%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-light-orange"><i class="bi bi-people"></i></div>
+                    <div>
+                        <h4 class="fw-bold m-0">156</h4>
+                        <p class="text-muted small m-0">Nuevos Clientes</p>
+                        <span class="trend-down"><i class="bi bi-graph-down-arrow"></i> -2%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-light-purple"><i class="bi bi-star"></i></div>
+                    <div>
+                        <h4 class="fw-bold m-0">4.8</h4>
+                        <p class="text-muted small m-0">Rating Promedio</p>
+                        <span class="trend-up"><i class="bi bi-graph-up-arrow"></i> +0.3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fila Inferior: Gráficos y Listas -->
+        <div class="row g-4">
+            <!-- Top Platillos -->
+            <div class="col-md-5">
+                <div class="panel-card">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold m-0">Más Vendidos</h5>
+                        <button class="btn btn-sm btn-light">Ver todos</button>
+                    </div>
+                    
+                    <div class="dish-item">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=100" class="dish-img" alt="Corte">
+                        <div class="flex-grow-1">
+                            <h6 class="m-0 fw-bold small">Tomahawk Prime</h6>
+                            <small class="text-muted">42 ventas</small>
+                        </div>
+                        <div class="text-end">
+                            <span class="fw-bold small">$35,700</span>
+                        </div>
+                    </div>
+
+                    <div class="dish-item">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=100" class="dish-img" alt="Pizza">
+                        <div class="flex-grow-1">
+                            <h6 class="m-0 fw-bold small">Pizza Burrata</h6>
+                            <small class="text-muted">38 ventas</small>
+                        </div>
+                        <div class="text-end">
+                            <span class="fw-bold small">$9,120</span>
+                        </div>
+                    </div>
+
+                    <div class="dish-item">
+                        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=100" class="dish-img" alt="Coctel">
+                        <div class="flex-grow-1">
+                            <h6 class="m-0 fw-bold small">Margarita Clásica</h6>
+                            <small class="text-muted">29 ventas</small>
+                        </div>
+                        <div class="text-end">
+                            <span class="fw-bold small">$3,480</span>
+                        </div>
+                    </div>
+
+                    <div class="dish-item">
+                        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=100" class="dish-img" alt="Postre">
+                        <div class="flex-grow-1">
+                            <h6 class="m-0 fw-bold small">Dona Glaseada</h6>
+                            <small class="text-muted">15 ventas</small>
+                        </div>
+                        <div class="text-end">
+                            <span class="fw-bold small">$675</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actividad de Mesas Rápida -->
+            <div class="col-md-7">
+                <div class="panel-card">
+                    <h5 class="fw-bold mb-4">Estado del Salón</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr class="small text-muted text-uppercase">
+                                    <th>Mesa</th>
+                                    <th>Estado</th>
+                                    <th>Tiempo</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="fw-bold">02</td>
+                                    <td><span class="badge bg-danger rounded-pill">Ocupada</span></td>
+                                    <td class="small">45 min</td>
+                                    <td class="fw-bold">$1,250</td>
+                                    <td><button class="btn btn-sm btn-light border"><i class="bi bi-eye"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">04</td>
+                                    <td><span class="badge bg-info rounded-pill">Cuenta</span></td>
+                                    <td class="small">1h 10m</td>
+                                    <td class="fw-bold">$3,100</td>
+                                    <td><button class="btn btn-sm btn-light border"><i class="bi bi-eye"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">03</td>
+                                    <td><span class="badge bg-warning text-dark rounded-pill">Llamando</span></td>
+                                    <td class="small">5 min</td>
+                                    <td class="fw-bold">$840</td>
+                                    <td><button class="btn btn-sm btn-light border"><i class="bi bi-eye"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

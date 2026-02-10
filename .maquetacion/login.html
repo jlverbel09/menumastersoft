@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Administrativo | MenuMasterSoft</title>
+    <!-- Bootstrap 5 & Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --color-principal: #0984E3;
+            --azul-oscuro: #0a3d62;
+            --bg-admin: #f1f2f6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--azul-oscuro) 0%, #062c45 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .admin-logo {
+            height: 45px;
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #636e72;
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+        }
+
+        .input-group-text {
+            background: #f8f9fa;
+            border-right: none;
+            color: #b2bec3;
+        }
+
+        .form-control {
+            border-left: none;
+            background: #f8f9fa;
+            padding: 12px;
+            font-size: 0.95rem;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #dee2e6;
+            background: white;
+        }
+
+        .btn-login {
+            background-color: var(--color-principal);
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .btn-login:hover {
+            background-color: #0773c5;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(9, 132, 227, 0.3);
+        }
+
+        .forgot-password {
+            font-size: 0.85rem;
+            color: var(--color-principal);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-text {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8rem;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        /* Estilo para el modo carga o error */
+        .error-message {
+            display: none;
+            background: #fff5f5;
+            color: #e53e3e;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            border: 1px solid #fed7d7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-card">
+            <!-- Logo del Sistema -->
+            <img src="https://i.ibb.co/Lz0D7xR/Menu-Master-Soft-Logo.png" alt="MenuMasterSoft" class="admin-logo">
+            
+            <h4 class="fw-bold mb-1">Panel de Control</h4>
+            <p class="text-muted small mb-4">Ingresa tus credenciales para continuar</p>
+
+            <div class="error-message" id="errorBox">
+                <i class="bi bi-exclamation-circle me-2"></i> Usuario o contraseña incorrectos
+            </div>
+
+            <form id="loginForm">
+                <!-- Usuario -->
+                <div class="mb-3">
+                    <label class="form-label">Correo Electrónico</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input type="email" class="form-control" placeholder="admin@menumaster.com" required>
+                    </div>
+                </div>
+
+                <!-- Contraseña -->
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <label class="form-label">Contraseña</label>
+                        <a href="#" class="forgot-password">¿La olvidaste?</a>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" class="form-control" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <!-- Recordarme -->
+                <div class="mb-4 text-start">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                        <label class="form-check-label small text-muted" for="rememberMe">
+                            Mantener sesión iniciada
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Botón de Acción -->
+                <button type="submit" class="btn btn-primary btn-login">
+                    Iniciar Sesión
+                </button>
+            </form>
+        </div>
+
+        <p class="footer-text">
+            MenuMasterSoft v2.4.0 <br>
+            &copy; 2024 Todos los derechos reservados.
+        </p>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const errorBox = document.getElementById('errorBox');
+            
+            // Simulación visual de carga
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Verificando...';
+            btn.disabled = true;
+            errorBox.style.display = 'none';
+
+            setTimeout(() => {
+                // Simulación de respuesta
+                btn.innerHTML = 'Iniciar Sesión';
+                btn.disabled = false;
+                errorBox.style.display = 'block'; // Mostramos error para propósitos de demo
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

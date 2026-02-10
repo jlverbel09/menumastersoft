@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Georking Business - 2026 Vision</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --bg-deep: #020617;
+            --surface-glass: rgba(15, 23, 42, 0.6);
+            --accent-electric: #22d3ee;
+            --accent-purple: #818cf8;
+            --border-glow: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-deep);
+            color: #f1f5f9;
+            height: 100vh;
+            overflow: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(34, 211, 238, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(129, 140, 248, 0.05) 0px, transparent 50%);
+        }
+
+        /* Efecto de Cristal Neumórfico */
+        .glass-card {
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Layout */
+        .app-container {
+            display: flex;
+            height: calc(100vh - 72px);
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        /* Sidebar 2026 Style */
+        .sidebar {
+            width: 80px;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar:hover {
+            width: 240px;
+        }
+
+        .nav-link {
+            color: #64748b;
+            padding: 1rem;
+            border-radius: 16px;
+            margin: 0.25rem 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: calc(100% - 1rem);
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .sidebar:not(:hover) .nav-text {
+            display: none;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--accent-electric);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(129, 140, 248, 0.1));
+            color: var(--accent-electric);
+            box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.2);
+        }
+
+        /* Top Bar Floating */
+        .top-nav-icons {
+            display: flex;
+            gap: 12px;
+            padding: 0.5rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .icon-btn {
+            min-width: 110px;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            border: 1px solid transparent;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .icon-btn i { width: 24px; height: 24px; margin-bottom: 8px; transition: transform 0.3s; }
+        .icon-btn span { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        .icon-btn:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .icon-btn.active {
+            background: linear-gradient(135deg, var(--accent-electric), var(--accent-purple));
+            color: var(--bg-deep);
+            box-shadow: 0 10px 25px -5px rgba(34, 211, 238, 0.4);
+        }
+
+        /* Modern Table */
+        .table-container {
+            flex: 1;
+            overflow-hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .table {
+            --bs-table-bg: transparent;
+            --bs-table-color: #e2e8f0;
+            --bs-table-border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .table thead th {
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: #475569;
+            padding: 1.5rem 1rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .table tbody td {
+            padding: 1.25rem 1rem;
+            vertical-align: middle;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .tr-active {
+            background: linear-gradient(90deg, rgba(34, 211, 238, 0.05) 0%, transparent 100%) !important;
+        }
+
+        /* Preview Card */
+        .preview-pane {
+            width: 380px;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+
+        .preview-img-container {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            aspect-ratio: 1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .preview-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .preview-img-container:hover img {
+            transform: scale(1.05);
+        }
+
+        .badge-2026 {
+            background: rgba(34, 211, 238, 0.1);
+            color: var(--accent-electric);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <!-- Header Flotante -->
+    <nav class="navbar px-4 py-3">
+        <div class="container-fluid glass-card py-2 px-4 border-0">
+            <div class="d-flex align-items-center">
+                <div class="bg-gradient-to-tr from-cyan-400 to-indigo-500 p-2 rounded-3 me-3">
+                    <i data-lucide="zap" class="text-white" style="width:20px; height:20px;"></i>
+                </div>
+                <a class="navbar-brand fw-bold text-white mb-0" href="#" style="letter-spacing: -0.5px;">GEORKING <span class="fw-light opacity-50">OS</span></a>
+            </div>
+            
+            <div class="d-flex align-items-center gap-4">
+                <div class="d-none d-md-flex gap-2">
+                    <button class="btn btn-link text-white-50"><i data-lucide="search" size="18"></i></button>
+                    <button class="btn btn-link text-white-50"><i data-lucide="bell" size="18"></i></button>
+                </div>
+                <div class="glass-card bg-white bg-opacity-5 px-3 py-1 d-flex align-items-center gap-2 border-0">
+                    <div class="rounded-circle bg-info" style="width:8px; height:8px; box-shadow: 0 0 10px var(--accent-electric);"></div>
+                    <span class="small fw-bold uppercase" style="font-size: 11px;">NAZCA PREMIUM</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        <!-- Sidebar Inteligente -->
+        <aside class="sidebar glass-card py-4">
+            <div class="nav flex-column w-100">
+                <a href="#" class="nav-link"><i data-lucide="pie-chart"></i> <span class="nav-text">Analíticas</span></a>
+                <a href="#" class="nav-link"><i data-lucide="box"></i> <span class="nav-text">Inventario</span></a>
+                <a href="#" class="nav-link active"><i data-lucide="layout-grid"></i> <span class="nav-text">Catálogo</span></a>
+                <a href="#" class="nav-link"><i data-lucide="repeat"></i> <span class="nav-text">Sincronización</span></a>
+                
+                <div class="mt-auto w-100 border-top border-white border-opacity-5 pt-3">
+                    <a href="#" class="nav-link text-danger text-opacity-75"><i data-lucide="power"></i> <span class="nav-text">Salir</span></a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-grow-1 d-flex flex-column overflow-hidden">
+            
+            <!-- Grid de Secciones 2026 -->
+            <div class="top-nav-icons mb-3">
+                <button class="icon-btn">
+                    <i data-lucide="layers"></i><span>Atributos</span>
+                </button>
+                <button class="icon-btn active">
+                    <i data-lucide="shopping-bag"></i><span>Productos</span>
+                </button>
+                <button class="icon-btn">
+                    <i data-lucide="users-2"></i><span>CRM</span>
+                </button>
+                <button class="icon-btn">
+                    <i data-lucide="truck"></i><span>Logística</span>
+                </button>
+                <button class="icon-btn">
+                    <i data-lucide="wallet"></i><span>Finanzas</span>
+                </button>
+                <button class="icon-btn">
+                    <i data-lucide="activity"></i><span>Status</span>
+                </button>
+                <button class="icon-btn">
+                    <i data-lucide="terminal"></i><span>Dev Tools</span>
+                </button>
+            </div>
+
+            <div class="d-flex flex-grow-1 overflow-hidden gap-3">
+                <!-- Tabla Neumórfica -->
+                <div class="flex-grow-1 glass-card d-flex flex-column overflow-hidden">
+                    <div class="p-4 d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold mb-0">Gestión de Productos</h5>
+                        <button class="btn btn-primary rounded-4 px-4 py-2 fw-bold d-flex align-items-center gap-2" style="background: var(--accent-electric); border:none; color: var(--bg-deep);">
+                            <i data-lucide="plus-circle" size="18"></i> Crear Nuevo
+                        </button>
+                    </div>
+                    
+                    <div class="table-responsive flex-grow-1 custom-scrollbar px-3">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Ref</th>
+                                    <th>Producto</th>
+                                    <th class="text-end">Costo</th>
+                                    <th class="text-end">Precio</th>
+                                    <th>Categoría</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="product-list">
+                                <!-- Dinámico -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Panel Vista Previa Inmersivo -->
+                <div class="preview-pane glass-card">
+                    <div id="preview-content" class="d-flex flex-column flex-grow-1">
+                        <!-- Dinámico -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        const productos = [
+            { id: 158, nombre: 'AEROPUERTO', precio: '14,90', costo: '5,20', categoria: 'CRIOLLOS', desc: 'Fusión magistral de arroz y fideos salteados a fuego intenso, con aromas de jengibre y soja premium.', imagen: 'https://images.unsplash.com/photo-1512058560366-c847e0581d26?auto=format&fit=crop&q=80&w=600' },
+            { id: 201, nombre: 'Agua Artesana', precio: '2,50', costo: '0,40', categoria: 'BEBIDAS', desc: 'Filtración volcánica natural, servida a temperatura controlada de 6°C.', imagen: 'https://images.unsplash.com/photo-1548919973-5dea58593735?auto=format&fit=crop&q=80&w=600' },
+            { id: 207, nombre: 'Gaseosa Blue', precio: '3,00', costo: '0,60', categoria: 'BEBIDAS', desc: 'Burbuja fina persistente con toques cítricos de limón siciliano.', imagen: 'https://images.unsplash.com/photo-1559839914-17aae19cea9e?auto=format&fit=crop&q=80&w=600' }
+        ];
+
+        let selectedId = 158;
+
+        function render() {
+            const list = document.getElementById('product-list');
+            list.innerHTML = productos.map(p => `
+                <tr onclick="selectProduct(${p.id})" class="cursor-pointer ${selectedId === p.id ? 'tr-active' : ''}">
+                    <td class="small opacity-50 font-monospace">#${p.id}</td>
+                    <td>
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded-3 overflow-hidden" style="width:32px; height:32px;">
+                                <img src="${p.imagen}" class="w-100 h-100 object-fit-cover">
+                            </div>
+                            <span class="fw-bold text-white">${p.nombre}</span>
+                        </div>
+                    </td>
+                    <td class="text-end opacity-50">€ ${p.costo}</td>
+                    <td class="text-end fw-bold" style="color: var(--accent-electric);">€ ${p.precio}</td>
+                    <td><span class="badge-2026">${p.categoria}</span></td>
+                    <td>
+                        <div class="d-flex gap-3">
+                            <i data-lucide="edit-2" style="width:14px; cursor:pointer;" class="text-white-50"></i>
+                            <i data-lucide="more-horizontal" style="width:14px; cursor:pointer;" class="text-white-50"></i>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            const product = productos.find(p => p.id === selectedId);
+            const preview = document.getElementById('preview-content');
+            preview.innerHTML = `
+                <div class="preview-img-container shadow-lg">
+                    <img src="${product.imagen}">
+                </div>
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h4 class="fw-800 text-white mb-1 uppercase letter-spacing-tight">${product.nombre}</h4>
+                        <span class="badge-2026">ID: ${product.id}</span>
+                    </div>
+                    <div class="text-end">
+                        <small class="text-white-50 fw-bold uppercase d-block" style="font-size:9px;">Utilidad</small>
+                        <span class="text-success fw-bold">+${((product.precio.replace(',','.') - product.costo.replace(',','.'))/product.costo.replace(',','.')*100).toFixed(0)}%</span>
+                    </div>
+                </div>
+                
+                <div class="flex-grow-1 custom-scrollbar overflow-y-auto mb-4">
+                    <p class="small text-white-50 lh-lg">${product.desc}</p>
+                </div>
+
+                <div class="mt-auto">
+                    <div class="d-flex justify-content-between mb-4 px-2">
+                        <div class="text-center">
+                            <small class="d-block opacity-50 uppercase fw-bold" style="font-size:9px;">Stock</small>
+                            <span class="fw-bold">24 ud</span>
+                        </div>
+                        <div class="text-center border-start border-end border-white border-opacity-10 px-4">
+                            <small class="d-block opacity-50 uppercase fw-bold" style="font-size:9px;">Ventas</small>
+                            <span class="fw-bold">142</span>
+                        </div>
+                        <div class="text-center">
+                            <small class="d-block opacity-50 uppercase fw-bold" style="font-size:9px;">Rating</small>
+                            <span class="fw-bold">4.8</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-light border-opacity-10 w-100 rounded-4 py-3 fw-bold uppercase" style="font-size:12px; letter-spacing:1px;">Gestionar SKU</button>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function selectProduct(id) {
+            selectedId = id;
+            render();
+        }
+
+        window.onload = render;
+    </script>
+</body>
+</html>

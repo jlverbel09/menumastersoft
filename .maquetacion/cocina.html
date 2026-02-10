@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocina KDS Pro | MenuMasterSoft</title>
+    <!-- Bootstrap 5 & Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --bg-kds: #121212;
+            --card-bg: #1e1e1e;
+            --text-main: #ffffff;
+            --color-urgente: #ff5252;
+            --color-espera: #ffab40;
+            --color-ok: #00e676;
+            --color-info: #2979ff;
+            --sidebar-width: 60px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-kds);
+            color: var(--text-main);
+            margin: 0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header KDS Mejorado */
+        .kds-header {
+            background: #000;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #333;
+            z-index: 100;
+        }
+
+        .kds-logo {
+            height: 25px;
+            filter: brightness(0) invert(1);
+        }
+
+        .stats-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .stats-badge {
+            background: #222;
+            padding: 6px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: 1px solid #333;
+        }
+
+        /* Layout Principal */
+        .main-layout {
+            display: flex;
+            flex-grow: 1;
+            height: calc(100vh - 55px);
+        }
+
+        /* Barra Lateral de Herramientas */
+        .kds-sidebar {
+            width: var(--sidebar-width);
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            border-right: 1px solid #333;
+            gap: 20px;
+        }
+
+        .side-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: none;
+            background: #222;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .side-btn:hover { background: var(--color-info); }
+        .side-btn.active { background: var(--color-info); }
+
+        /* Contenedor de Comandas */
+        .kds-container {
+            flex-grow: 1;
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            overflow-x: auto;
+            align-items: flex-start;
+            scroll-behavior: smooth;
+        }
+
+        /* Tarjeta de Comanda Profesional */
+        .ticket {
+            min-width: 320px;
+            max-width: 320px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            border: 1px solid #333;
+            border-top: 10px solid var(--color-info);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .ticket.urgente { border-top-color: var(--color-urgente); }
+        .ticket.espera { border-top-color: var(--color-espera); }
+
+        .ticket-header {
+            padding: 15px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mesa-info {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .tiempo-info {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: #000;
+            padding: 4px 10px;
+            border-radius: 6px;
+            color: var(--color-ok);
+        }
+
+        .ticket-body {
+            padding: 15px;
+            flex-grow: 1;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        /* Estilo de los items */
+        .item-line {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.02);
+            cursor: pointer;
+            user-select: none;
+            border-left: 4px solid transparent;
+        }
+
+        .item-line.completed {
+            background: rgba(0,230,118,0.1);
+            border-left-color: var(--color-ok);
+            opacity: 0.6;
+        }
+
+        .item-line.completed .item-name {
+            text-decoration: line-through;
+        }
+
+        .item-qty {
+            font-weight: 900;
+            color: var(--color-info);
+            font-size: 1.4rem;
+            margin-right: 15px;
+            min-width: 30px;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 1.15rem;
+            line-height: 1.2;
+        }
+
+        .item-note {
+            display: block;
+            margin-top: 4px;
+            font-size: 0.9rem;
+            color: var(--color-espera);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .ticket-footer {
+            padding: 15px;
+            background: #111;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        .btn-ready {
+            width: 100%;
+            background: var(--color-ok);
+            color: #000;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            box-shadow: 0 4px 0 #00964b;
+        }
+
+        .btn-ready:active {
+            transform: translateY(2px);
+            box-shadow: none;
+        }
+
+        /* Animaciones */
+        .urgente .tiempo-info {
+            color: white;
+            background: var(--color-urgente);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0.5; }
+        }
+
+        .hidden-ticket {
+            opacity: 0;
+            transform: scale(0.8) translateY(50px);
+            pointer-events: none;
+        }
+
+        /* Notificación de nuevo pedido */
+        #new-order-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--color-info);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: none;
+            animation: slideIn 0.3s ease-out;
+            z-index: 1000;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="kds-header">
+        <div class="d-flex align-items-center">
+            <img src="https://i.ibb.co/Lz0D7xR/Menu-Master-Soft-Logo.png" alt="MenuMasterSoft" class="kds-logo me-3">
+            <div class="stats-badge bg-danger text-white border-0">MODO COCINA CALIENTE</div>
+        </div>
+        
+        <div class="stats-group">
+            <div class="stats-badge" id="ticket-count">PENDIENTES: 4</div>
+            <div class="stats-badge text-warning" title="Tiempo promedio de despacho">AVERG: 14m</div>
+            <div class="stats-badge" id="clock">00:00:00</div>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        <!-- Sidebar de Control -->
+        <aside class="kds-sidebar">
+            <button class="side-btn active" title="Ver todos los pedidos"><i class="bi bi-grid-fill"></i></button>
+            <button class="side-btn" onclick="recallLastTicket()" title="Recuperar último pedido despachado"><i class="bi bi-arrow-counterclockwise"></i></button>
+            <button class="side-btn" title="Configuración de estación"><i class="bi bi-gear-fill"></i></button>
+            <div class="mt-auto mb-3">
+                <button class="side-btn" onclick="simulateNewOrder()" title="Simular nuevo pedido"><i class="bi bi-plus-circle-fill text-success"></i></button>
+            </div>
+        </aside>
+
+        <!-- Contenedor de Comandas -->
+        <div class="kds-container" id="main-container">
+            
+            <!-- Ticket 1: Urgente -->
+            <div class="ticket urgente" id="t1">
+                <div class="ticket-header">
+                    <div class="mesa-info">MESA 04</div>
+                    <div class="tiempo-info">18:45</div>
+                </div>
+                <div class="ticket-body">
+                    <div class="item-line" onclick="toggleItem(this)">
+                        <span class="item-qty">2</span>
+                        <div class="item-details">
+                            <span class="item-name">Hamburguesa Master</span>
+                            <span class="item-note">SIN CEBOLLA - TÉRMINO MEDIO</span>
+                        </div>
+                    </div>
+                    <div class="item-line" onclick="toggleItem(this)">
+                        <span class="item-qty">1</span>
+                        <div class="item-details">
+                            <span class="item-name">Papas Trufadas</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ticket-footer">
+                    <button class="btn-ready" onclick="completeTicket('t1')">Despachar Pedido</button>
+                </div>
+            </div>
+
+            <!-- Ticket 2 -->
+            <div class="ticket espera" id="t2">
+                <div class="ticket-header">
+                    <div class="mesa-info">MESA 12</div>
+                    <div class="tiempo-info">09:12</div>
+                </div>
+                <div class="ticket-body">
+                    <div class="item-line" onclick="toggleItem(this)">
+                        <span class="item-qty">1</span>
+                        <div class="item-details">
+                            <span class="item-name">Pizza Margarita</span>
+                            <span class="item-note">EXTRA QUESO</span>
+                        </div>
+                    </div>
+                    <div class="item-line" onclick="toggleItem(this)">
+                        <span class="item-qty">2</span>
+                        <div class="item-details">
+                            <span class="item-name">Ensalada César</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ticket-footer">
+                    <button class="btn-ready" onclick="completeTicket('t2')">Despachar Pedido</button>
+                </div>
+            </div>
+
+            <!-- Ticket 3 -->
+            <div class="ticket" id="t3">
+                <div class="ticket-header">
+                    <div class="mesa-info">PARA LLEVAR</div>
+                    <div class="tiempo-info">03:20</div>
+                </div>
+                <div class="ticket-body">
+                    <div class="item-line" onclick="toggleItem(this)">
+                        <span class="item-qty">3</span>
+                        <div class="item-details">
+                            <span class="item-name">Tacos al Pastor</span>
+                            <span class="item-note">TODO CON COPIA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ticket-footer">
+                    <button class="btn-ready" onclick="completeTicket('t3')">Despachar Pedido</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Toast de Notificación -->
+    <div id="new-order-toast">
+        <i class="bi bi-bell-fill me-2"></i> ¡NUEVA COMANDA RECIBIDA!
+    </div>
+
+    <script>
+        let lastDespatchedTicket = null;
+
+        // Reloj
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString();
+        }, 1000);
+
+        // Tachar items
+        function toggleItem(element) {
+            element.classList.toggle('completed');
+        }
+
+        // Despachar Ticket
+        function completeTicket(ticketId) {
+            const ticket = document.getElementById(ticketId);
+            lastDespatchedTicket = ticket.cloneNode(true);
+            lastDespatchedTicket.classList.remove('hidden-ticket');
+            
+            ticket.classList.add('hidden-ticket');
+            
+            setTimeout(() => {
+                ticket.remove();
+                updateCount();
+            }, 300);
+        }
+
+        // Función de recuperación (Recall)
+        function recallLastTicket() {
+            if (!lastDespatchedTicket) {
+                alert("No hay tickets recientes para recuperar.");
+                return;
+            }
+            const container = document.getElementById('main-container');
+            const newTicket = lastDespatchedTicket.cloneNode(true);
+            newTicket.id = "recall-" + Date.now();
+            container.prepend(newTicket);
+            updateCount();
+            lastDespatchedTicket = null;
+        }
+
+        // Simular Nuevo Pedido
+        function simulateNewOrder() {
+            const toast = document.getElementById('new-order-toast');
+            toast.style.display = 'block';
+            
+            // Sonido simulado
+            console.log("DING! Nuevo pedido.");
+
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        function updateCount() {
+            const count = document.querySelectorAll('.ticket').length;
+            document.getElementById('ticket-count').innerText = "PENDIENTES: " + count;
+        }
+    </script>
+</body>
+</html>

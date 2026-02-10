@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Georking Business - Inventario Dark</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+        .sidebar-item-active {
+            background-color: #1e293b;
+            color: #6366f1;
+            border-radius: 0.5rem;
+        }
+        .card-dark {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+        }
+        .table-row-hover:hover {
+            background-color: #334155;
+        }
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Wrapper Principal -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar Izquierda -->
+        <aside class="w-64 flex-shrink-0 border-r border-slate-800 bg-[#02091a] p-4 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center gap-2 mb-10 px-2">
+                    <div class="bg-indigo-600 p-1.5 rounded-lg">
+                        <i class="fas fa-th-large text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight">Georking <span class="font-light text-slate-400">Business</span></span>
+                </div>
+
+                <nav class="space-y-1">
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-white transition-colors">
+                        <i class="fas fa-home w-5"></i> Panorama
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 sidebar-item-active">
+                        <i class="fas fa-box w-5"></i> Productos
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-white transition-colors">
+                        <i class="fas fa-users w-5"></i> Clientes
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-white transition-colors">
+                        <i class="fas fa-file-invoice w-5"></i> Facturación
+                    </a>
+
+                    <div class="pt-10 pb-2 px-3 text-xs font-semibold text-slate-500 uppercase">Configuración</div>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-white transition-colors">
+                        <i class="fas fa-cog w-5"></i> Ajustes
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-white transition-colors">
+                        <i class="fas fa-question-circle w-5"></i> Soporte
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Contenido Central -->
+        <main class="flex-1 flex flex-col overflow-hidden">
+            
+            <!-- Header Superior -->
+            <header class="h-16 flex items-center justify-end px-8 border-b border-slate-800 gap-4">
+                <div class="flex items-center bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 text-sm">
+                    <i class="fas fa-store mr-2 text-slate-400"></i>
+                    <span>Sede Nazca</span>
+                    <i class="fas fa-chevron-down ml-3 text-xs text-slate-400"></i>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center border border-slate-600">
+                    <i class="fas fa-user text-slate-400"></i>
+                </div>
+            </header>
+
+            <!-- Área de Trabajo -->
+            <div class="flex-1 p-8 overflow-y-auto">
+                
+                <!-- Filtros / Pestañas Superiores -->
+                <div class="flex gap-4 mb-8">
+                    <button class="bg-indigo-600 px-6 py-2 rounded-xl font-medium shadow-lg shadow-indigo-500/20">General</button>
+                    <button class="bg-slate-800 border border-slate-700 px-6 py-2 rounded-xl font-medium hover:bg-slate-700 transition-colors">Ofertas</button>
+                    <button class="bg-slate-800 border border-slate-700 px-6 py-2 rounded-xl font-medium hover:bg-slate-700 transition-colors">Favoritos</button>
+                    <button class="bg-slate-800 border border-slate-700 px-6 py-2 rounded-xl font-medium hover:bg-slate-700 transition-colors">Stock Bajo</button>
+                </div>
+
+                <div class="flex gap-6 items-start">
+                    
+                    <!-- Tabla de Productos -->
+                    <div class="flex-1 card-dark rounded-3xl overflow-hidden">
+                        <div class="p-6 flex justify-between items-center border-b border-slate-800">
+                            <div>
+                                <h1 class="text-xl font-bold">Catálogo de Productos</h1>
+                                <p class="text-sm text-slate-400">Gestiona los artículos de tu inventario</p>
+                            </div>
+                            <button class="bg-[#0f172a] hover:bg-slate-900 border border-slate-700 px-5 py-2.5 rounded-xl flex items-center gap-2 font-medium transition-all">
+                                <i class="fas fa-plus text-xs"></i> Añadir Item
+                            </button>
+                        </div>
+
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-800/50 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
+                                <tr>
+                                    <th class="px-6 py-4">Referencia</th>
+                                    <th class="px-6 py-4">Nombre del Producto</th>
+                                    <th class="px-6 py-4 text-center">Costo</th>
+                                    <th class="px-6 py-4 text-center">PVP</th>
+                                    <th class="px-6 py-4">Categoría</th>
+                                    <th class="px-6 py-4 text-center">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800">
+                                <!-- Producto 1 -->
+                                <tr class="table-row-hover transition-colors cursor-pointer bg-slate-800/20">
+                                    <td class="px-6 py-5 text-slate-400">#158</td>
+                                    <td class="px-6 py-5">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center overflow-hidden border border-slate-600">
+                                                <i class="fas fa-bowl-rice text-slate-500"></i>
+                                            </div>
+                                            <span class="font-semibold">Arroz Aeropuerto</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-5 text-center text-slate-400">€ 5,20</td>
+                                    <td class="px-6 py-5 text-center font-bold">€ 14,90</td>
+                                    <td class="px-6 py-5">
+                                        <span class="bg-slate-800 px-3 py-1 rounded-full text-[11px] text-slate-400">Cocina</span>
+                                    </td>
+                                    <td class="px-6 py-5 text-center">
+                                        <span class="status-dot bg-green-500 shadow-sm shadow-green-500/50"></span>
+                                    </td>
+                                </tr>
+                                <!-- Producto 2 -->
+                                <tr class="table-row-hover transition-colors cursor-pointer">
+                                    <td class="px-6 py-5 text-slate-400">#201</td>
+                                    <td class="px-6 py-5">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center border border-slate-600">
+                                                <i class="fas fa-bottle-water text-slate-500"></i>
+                                            </div>
+                                            <span class="font-semibold">Agua Mineral</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-5 text-center text-slate-400">€ 0,40</td>
+                                    <td class="px-6 py-5 text-center font-bold">€ 2,50</td>
+                                    <td class="px-6 py-5">
+                                        <span class="bg-slate-800 px-3 py-1 rounded-full text-[11px] text-slate-400">Bebidas</span>
+                                    </td>
+                                    <td class="px-6 py-5 text-center">
+                                        <span class="status-dot bg-green-500"></span>
+                                    </td>
+                                </tr>
+                                <!-- Producto 3 -->
+                                <tr class="table-row-hover transition-colors cursor-pointer">
+                                    <td class="px-6 py-5 text-slate-400">#207</td>
+                                    <td class="px-6 py-5">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center border border-slate-600">
+                                                <i class="fas fa-wine-glass-empty text-slate-500"></i>
+                                            </div>
+                                            <span class="font-semibold">Refresco Blue</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-5 text-center text-slate-400">€ 0,60</td>
+                                    <td class="px-6 py-5 text-center font-bold">€ 3,00</td>
+                                    <td class="px-6 py-5">
+                                        <span class="bg-slate-800 px-3 py-1 rounded-full text-[11px] text-slate-400">Bebidas</span>
+                                    </td>
+                                    <td class="px-6 py-5 text-center">
+                                        <span class="status-dot bg-slate-500"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="h-32 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
+                    </div>
+
+                    <!-- Panel de Detalle Derecho -->
+                    <div class="w-80 space-y-4">
+                        <div class="card-dark rounded-3xl p-6 relative">
+                            <!-- Imagen Placeholder -->
+                            <div class="w-full h-24 bg-slate-700/50 rounded-2xl mb-6 overflow-hidden flex items-center justify-center border border-dashed border-slate-600">
+                                <i class="fas fa-image text-slate-600 text-3xl"></i>
+                            </div>
+
+                            <div class="flex justify-between items-start mb-1">
+                                <h2 class="text-2xl font-bold">Arroz Aeropuerto</h2>
+                                <button class="text-slate-500 hover:text-white"><i class="fas fa-edit"></i></button>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-6 uppercase tracking-wider">Ref: SKU-158</p>
+
+                            <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700 text-sm text-slate-400 leading-relaxed mb-6">
+                                Clásica combinación de arroz chaufa con fideos saltados al wok, servido con huevo frito.
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3 mb-6">
+                                <div class="bg-slate-800/30 p-4 rounded-2xl border border-slate-700/50">
+                                    <p class="text-[10px] text-slate-500 uppercase mb-1">Precio Venta</p>
+                                    <p class="text-lg font-bold">€ 14,90</p>
+                                </div>
+                                <div class="bg-slate-800/30 p-4 rounded-2xl border border-slate-700/50">
+                                    <p class="text-[10px] text-slate-500 uppercase mb-1">Margen Bruto</p>
+                                    <p class="text-lg font-bold text-green-500">€ 9.70</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3">
+                                <button class="w-full py-3 rounded-xl border border-slate-700 font-semibold hover:bg-slate-800 transition-colors">
+                                    Imprimir Etiqueta
+                                </button>
+                                <button class="w-full py-3 bg-indigo-600 rounded-xl font-bold shadow-lg shadow-indigo-500/20 hover:bg-indigo-500 transition-all">
+                                    Actualizar Stock
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

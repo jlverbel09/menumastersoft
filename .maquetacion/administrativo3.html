@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Gestión de Pedidos | MenuMasterSoft</title>
+    <!-- Bootstrap 5 & Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --color-principal: #0984E3;
+            --azul-oscuro: #0a3d62;
+            --bg-admin: #f1f2f6;
+            --urgente: #e74c3c;
+            --preparando: #f1c40f;
+            --nuevo: #2ecc71;
+            --sidebar-width: 240px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-admin);
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar de navegación */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--azul-oscuro);
+            color: white;
+            padding: 20px;
+            flex-shrink: 0;
+        }
+
+        .admin-logo {
+            height: 35px;
+            margin-bottom: 30px;
+            filter: brightness(0) invert(1);
+        }
+
+        /* Contenedor Principal */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Tablero de Pedidos (Estilo Kanban) */
+        .pedidos-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .pedido-card {
+            width: 320px;
+            background: white;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: none;
+            flex-shrink: 0;
+            height: fit-content;
+            max-height: 100%;
+        }
+
+        .pedido-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pedido-header.nuevo { background-color: rgba(46, 204, 113, 0.1); color: #27ae60; }
+        .pedido-header.preparando { background-color: rgba(241, 196, 15, 0.1); color: #9a7d0a; }
+        .pedido-header.urgente { background-color: rgba(231, 76, 60, 0.1); color: #c0392b; }
+
+        .pedido-body {
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .item-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .item-qty {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-weight: 700;
+            margin-right: 12px;
+            font-size: 0.9rem;
+        }
+
+        .item-info .item-name {
+            font-weight: 600;
+            display: block;
+        }
+
+        .item-info .item-note {
+            font-size: 0.8rem;
+            color: #e67e22;
+            font-style: italic;
+        }
+
+        .pedido-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            background: #fafafa;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .btn-ready {
+            width: 100%;
+            background-color: var(--color-principal);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .btn-ready:hover { opacity: 0.9; color: white; }
+
+        /* Filtros superiores */
+        .filter-bar {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .time-badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <img src="https://i.ibb.co/Lz0D7xR/Menu-Master-Soft-Logo.png" alt="MenuMasterSoft" class="admin-logo">
+        <nav class="nav flex-column gap-2 mt-4">
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-grid-3x3-gap me-2"></i> Gestión de Mesas</a>
+            <a class="nav-link text-white active fw-bold" href="#"><i class="bi bi-receipt me-2"></i> Pedidos Activos</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-cup-hot me-2"></i> Menú</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-gear me-2"></i> Ajustes</a>
+        </nav>
+    </div>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <div class="filter-bar">
+            <div>
+                <h4 class="fw-bold m-0">Pedidos en Cocina</h4>
+                <p class="text-muted small m-0">8 pedidos activos actualmente</p>
+            </div>
+            <div class="d-flex gap-3">
+                <select class="form-select form-select-sm" style="width: 150px;">
+                    <option>Todas las Áreas</option>
+                    <option>Cocina Caliente</option>
+                    <option>Barra / Bebidas</option>
+                </select>
+                <div class="btn-group">
+                    <button class="btn btn-sm btn-outline-primary active">Activos</button>
+                    <button class="btn btn-sm btn-outline-primary">Historial</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pedidos-container">
+            <!-- Pedido 1: Urgente -->
+            <div class="pedido-card">
+                <div class="pedido-header urgente">
+                    <span class="fw-bold">Mesa 04</span>
+                    <span class="time-badge bg-danger text-white"><i class="bi bi-clock me-1"></i> 18m</span>
+                </div>
+                <div class="pedido-body">
+                    <div class="item-row">
+                        <span class="item-qty">1</span>
+                        <div class="item-info">
+                            <span class="item-name">Tomahawk Prime</span>
+                            <span class="item-note">Término medio, sin sal de grano</span>
+                        </div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-qty">2</span>
+                        <div class="item-info">
+                            <span class="item-name">Copa Vino Tinto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pedido-footer text-center">
+                    <button class="btn-ready">Marcar como Listo</button>
+                </div>
+            </div>
+
+            <!-- Pedido 2: En preparación -->
+            <div class="pedido-card">
+                <div class="pedido-header preparando">
+                    <span class="fw-bold">Mesa 02</span>
+                    <span class="time-badge bg-warning text-dark"><i class="bi bi-clock me-1"></i> 10m</span>
+                </div>
+                <div class="pedido-body">
+                    <div class="item-row">
+                        <span class="item-qty">2</span>
+                        <div class="item-info">
+                            <span class="item-name">Hamburguesa Master</span>
+                            <span class="item-note">Una sin pepinillos</span>
+                        </div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-qty">1</span>
+                        <div class="item-info">
+                            <span class="item-name">Papas Fritas Gdes</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pedido-footer text-center">
+                    <button class="btn-ready">Marcar como Listo</button>
+                </div>
+            </div>
+
+            <!-- Pedido 3: Nuevo -->
+            <div class="pedido-card">
+                <div class="pedido-header nuevo">
+                    <span class="fw-bold">Mesa 08</span>
+                    <span class="time-badge bg-success text-white">NUEVO</span>
+                </div>
+                <div class="pedido-body">
+                    <div class="item-row">
+                        <span class="item-qty">4</span>
+                        <div class="item-info">
+                            <span class="item-name">Tacos de Ribeye</span>
+                        </div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-qty">1</span>
+                        <div class="item-info">
+                            <span class="item-name">Guacamole Especial</span>
+                        </div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-qty">4</span>
+                        <div class="item-info">
+                            <span class="item-name">Refresco Cola</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pedido-footer text-center">
+                    <button class="btn-ready">Empezar Preparación</button>
+                </div>
+            </div>
+
+            <!-- Pedido 4: Bebidas -->
+            <div class="pedido-card">
+                <div class="pedido-header preparando">
+                    <span class="fw-bold">Mesa 05</span>
+                    <span class="time-badge bg-warning text-dark"><i class="bi bi-clock me-1"></i> 5m</span>
+                </div>
+                <div class="pedido-body">
+                    <div class="item-row">
+                        <span class="item-qty">3</span>
+                        <div class="item-info">
+                            <span class="item-name">Margarita Clásica</span>
+                            <span class="item-note">Escarchadas con tajín</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pedido-footer text-center">
+                    <button class="btn-ready">Marcar como Listo</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
