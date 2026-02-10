@@ -18,6 +18,7 @@
 
     <!-- Hero Header -->
     <header class="hero-section">
+        <img class="restaurante-logo" src="./assets/img/restaurante/1.png" alt="">
         <div class="d-flex align-items-center gap-3 position-absolute top-0 end-0 p-3">
             <span class="mesa-badge">Mesa 08</span>
             <div class="theme-toggle" id="themeBtn">

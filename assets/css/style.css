@@ -23,6 +23,14 @@ body {
     box-shadow: var(--shadow);
 }
 
+.hero-section img.restaurante-logo {
+    width: 66px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    border-radius: 10px;
+}
+
 .main-logo {
     height: 80px;
     margin-bottom: 20px;
