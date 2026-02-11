@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano de Sala - Restaurante Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .table-shape {
+            transition: all 0.2s ease;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+        .table-shape:hover {
+            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.15));
+            transform: scale(1.02);
+        }
+        .bg-blueprint {
+            background-color: #f1f5f9;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-blueprint min-h-screen p-4 md:p-10 text-slate-800">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- Dashboard Header -->
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6 bg-white/80 backdrop-blur-md p-6 rounded-3xl border border-white shadow-xl">
+            <div>
+                <h1 class="text-2xl font-black tracking-tight text-indigo-950 uppercase">Sala Principal</h1>
+                <div class="flex items-center gap-2 mt-1">
+                    <span class="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    <p class="text-sm text-slate-500 font-medium">Sistema en línea - 14:30 PM</p>
+                </div>
+            </div>
+
+            <!-- Filtros Rápidos -->
+            <div class="flex p-1 bg-slate-100 rounded-xl">
+                <button onclick="filterTables('all')" class="px-4 py-2 text-sm font-bold rounded-lg bg-white shadow-sm text-indigo-600">Todas</button>
+                <button onclick="filterTables('free')" class="px-4 py-2 text-sm font-bold rounded-lg text-slate-600 hover:bg-white/50 transition-all">Libres</button>
+                <button onclick="filterTables('occupied')" class="px-4 py-2 text-sm font-bold rounded-lg text-slate-600 hover:bg-white/50 transition-all">Ocupadas</button>
+            </div>
+        </header>
+
+        <!-- Grid de Mesas Estilizadas -->
+        <div id="floor-plan" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Renderizado dinámico -->
+        </div>
+    </div>
+
+    <!-- Panel Lateral de Detalle (Drawer) -->
+    <div id="drawer" class="fixed inset-y-0 right-0 w-full md:w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50 border-l border-slate-200">
+        <div class="p-8">
+            <div class="flex justify-between items-center mb-8">
+                <h2 id="drawer-title" class="text-3xl font-black">Mesa 00</h2>
+                <button onclick="closeDrawer()" class="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                    <p class="text-xs font-bold uppercase text-slate-400 mb-1">Estado Actual</p>
+                    <div id="drawer-status" class="flex items-center gap-2">
+                        <!-- Dinámico -->
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 text-center">
+                    <div class="p-4 bg-indigo-50 rounded-2xl">
+                        <span class="block text-2xl font-bold text-indigo-600" id="drawer-cap">0</span>
+                        <span class="text-xs font-medium text-indigo-400">Capacidad</span>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-2xl">
+                        <span class="block text-2xl font-bold text-slate-600">S-22</span>
+                        <span class="text-xs font-medium text-slate-400">Zona</span>
+                    </div>
+                </div>
+
+                <button class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 transition-all active:scale-95 mt-10">
+                    Abrir Comanda
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tableData = [
+            { id: 1, type: 'circle', capacity: 2, status: 'free' },
+            { id: 2, type: 'rect', capacity: 4, status: 'occupied' },
+            { id: 3, type: 'rect', capacity: 4, status: 'free' },
+            { id: 4, type: 'rect', capacity: 6, status: 'occupied' },
+            { id: 5, type: 'circle', capacity: 2, status: 'free' },
+            { id: 6, type: 'rect', capacity: 8, status: 'reserved' },
+            { id: 7, type: 'rect', capacity: 4, status: 'free' },
+            { id: 8, type: 'circle', capacity: 4, status: 'free' }
+        ];
+
+        function renderFloorPlan(filter = 'all') {
+            const container = document.getElementById('floor-plan');
+            container.innerHTML = '';
+
+            tableData.filter(t => filter === 'all' || t.status === filter).forEach(table => {
+                const element = document.createElement('div');
+                element.className = 'table-shape group relative flex flex-col items-center justify-center p-4 cursor-pointer';
+                element.onclick = () => openDrawer(table);
+
+                const colorClass = table.status === 'occupied' ? 'bg-rose-500' : (table.status === 'reserved' ? 'bg-amber-500' : 'bg-emerald-500');
+                const shadowClass = table.status === 'occupied' ? 'shadow-rose-100' : (table.status === 'reserved' ? 'shadow-amber-100' : 'shadow-emerald-100');
+                
+                // Formas de mesa dinámicas
+                const shapeHtml = table.type === 'circle' 
+                    ? `<div class="w-32 h-32 rounded-full ${colorClass} flex items-center justify-center text-white border-8 border-white shadow-2xl">
+                         <span class="text-3xl font-black">${table.id}</span>
+                       </div>`
+                    : `<div class="w-40 h-28 rounded-2xl ${colorClass} flex items-center justify-center text-white border-8 border-white shadow-2xl">
+                         <span class="text-3xl font-black">${table.id}</span>
+                       </div>`;
+
+                // Sillas decorativas alrededor
+                const chairs = table.type === 'circle' ? 4 : (table.capacity > 4 ? 6 : 4);
+                let chairsHtml = '';
+                for(let i=0; i<chairs; i++) {
+                    chairsHtml += `<div class="absolute w-6 h-6 bg-white/40 border-2 border-white rounded-full transition-transform group-hover:scale-110" style="transform: rotate(${(360/chairs)*i}deg) translateY(-4.5rem)"></div>`;
+                }
+
+                element.innerHTML = `
+                    <div class="relative flex items-center justify-center mb-4">
+                        ${chairsHtml}
+                        ${shapeHtml}
+                    </div>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-indigo-600 transition-colors">Mesa para ${table.capacity}</span>
+                `;
+                container.appendChild(element);
+            });
+        }
+
+        function openDrawer(table) {
+            const drawer = document.getElementById('drawer');
+            const statusNames = { free: 'Disponible', occupied: 'En Servicio', reserved: 'Reservada' };
+            const statusColors = { free: 'text-emerald-500', occupied: 'text-rose-500', reserved: 'text-amber-500' };
+
+            document.getElementById('drawer-title').innerText = `Mesa ${table.id < 10 ? '0'+table.id : table.id}`;
+            document.getElementById('drawer-cap').innerText = table.capacity;
+            document.getElementById('drawer-status').innerHTML = `
+                <span class="w-3 h-3 rounded-full bg-current ${statusColors[table.status]}"></span>
+                <span class="font-bold ${statusColors[table.status]}">${statusNames[table.status]}</span>
+            `;
+            
+            drawer.classList.remove('translate-x-full');
+        }
+
+        function closeDrawer() {
+            document.getElementById('drawer').classList.add('translate-x-full');
+        }
+
+        function filterTables(status) {
+            renderFloorPlan(status);
+            // Actualizar estilos de botones (opcional)
+        }
+
+        window.onload = () => renderFloorPlan();
+    </script>
+</body>
+</html>
