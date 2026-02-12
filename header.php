@@ -17,7 +17,7 @@ require_once 'db/conexion.php';
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
-<body>
+<body id="contenido">
 
 
     <?php
@@ -78,7 +78,7 @@ require_once 'db/conexion.php';
                 </div> -->
             </div>
             <!-- Reemplazar con la URL de tu imagen de logo cargada anteriormente -->
-            <img src="./assets/img/restaurante/1.png" alt="MenuMasterSoft" class="main-logo">
+            <img src="./assets/img/restaurante/<?= $id_negocio ?>.png" alt="MenuMasterSoft" class="main-logo">
 
         </header>
 

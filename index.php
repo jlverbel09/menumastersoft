@@ -18,7 +18,7 @@ if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
                     <input required type="text" name="u" placeholder="¿Cuál es tu nombre?">
                 </div>
             </div>
-            <button class="btn btn-primary px-4 py-2 mt-3" style="background-color: var(--color-principal); border: none; border-radius: 12px;">
+            <button id="btn-toggle" class="btn btn-primary px-4 py-2 mt-3" style="background-color: var(--color-principal); border: none; border-radius: 12px;">
                 Ver Menú Digital
             </button>
         </div>
@@ -65,7 +65,7 @@ if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
                 <div class="item-info">
                     <div class="item-name"><?= ucwords(strtolower($prod['nombre'])) ?></div>
                     <div class="item-price fw-bold">$<?= number_format($prod['precio'], 2) ?></div>
-                </div> <button class="btn-add"><i class="bi bi-plus-lg"></i></button>
+                </div> <button class="btn-add" onclick="addToCart('<?= $prod['id'] ?>', '<?= $prod['nombre'] ?>', <?= $prod['precio'] ?>, '<?= $prod['img_url'] ?>')"><i class="bi bi-plus-lg"></i></button>
             </div>
         </div>
 

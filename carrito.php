@@ -1,5 +1,6 @@
 
-<a href="#" class="floating-cart">
-    <span><i class="bi bi-bag-check-fill me-2"></i> Mi Pedido (2)</span>
-    <span class="fw-bold">$18.50</span>
+<div class="contenido-carrito" id="contenido-carrito"></div>
+<a href="#" id="verCarrito" onclick="verCarrito()" class="floating-cart carrito-btn" style="display: none;">
+    <span><i class="bi bi-bag-check-fill me-2"></i> Mi Pedido (0)</span>
+    <span class="fw-bold">$0</span>
 </a>
