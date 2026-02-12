@@ -45,7 +45,7 @@ if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
 
 
     <?php
-    $producto = $conexion->prepare("SELECT * FROM producto WHERE id_negocio = :id_negocio");
+    $producto = $conexion->prepare("SELECT * FROM producto WHERE estado = 'A' AND id_negocio = :id_negocio");
     $producto->bindParam(':id_negocio', $_GET['n']);
     $producto->execute();
     $producto = $producto->fetchAll(PDO::FETCH_ASSOC);
