@@ -26,44 +26,52 @@ if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
 <?php
 
 } else if (isset($_GET['n']) && isset($_GET['m']) && isset($_GET['u'])) {
-
+    /* DATOS DE CATEGORIA */
+    $categoria = $conexion->prepare("SELECT * FROM categoria WHERE id_negocio = :id_negocio");
+    $categoria->bindParam(':id_negocio', $_GET['n']);
+    $categoria->execute();
+    $categoria = $categoria->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 
     <!-- categorias -->
     <div class="categories-wrapper">
         <div class="cat-item active">🔥 Populares</div>
-        <div class="cat-item">🍕 Pizzas</div>
-        <div class="cat-item">🍔 Hamburguesas</div>
-        <div class="cat-item">🥤 Bebidas</div>
-        <div class="cat-item">🍰 Postres</div>
+        <?php foreach ($categoria as $cat) : ?>
+            <div class="cat-item" onclick="selectCategory(this)">🔥<?= ucfirst(strtolower($cat['nombre'])) ?></div>
+        <?php endforeach; ?>
     </div>
 
 
+
+
+    <?php
+    $producto = $conexion->prepare("SELECT * FROM producto WHERE id_negocio = :id_negocio");
+    $producto->bindParam(':id_negocio', $_GET['n']);
+    $producto->execute();
+    $producto = $producto->fetchAll(PDO::FETCH_ASSOC);
+
+
+    $categorias = '';
+    foreach ($producto as $prod) :
+
+    ?>
+        <div class="container mt-3">
+            <?php if ($prod['categoria'] != $categorias) : ?>
+                <h6 class="fw-bold mb-3 text-secondary"><?= strtoupper($prod['categoria']) ?></h6>
+            <?php endif; ?>
+            <?php $categorias = $prod['categoria']; ?>
+
+            <div class="item-row"> <img src="<?= $prod['img_url'] ?>" class="item-img">
+                <div class="item-info">
+                    <div class="item-name"><?= ucwords(strtolower($prod['nombre'])) ?></div>
+                    <div class="item-price fw-bold">$<?= number_format($prod['precio'], 2) ?></div>
+                </div> <button class="btn-add"><i class="bi bi-plus-lg"></i></button>
+            </div>
+        </div>
+
+    <?php endforeach; ?>
     <!-- contenido -->
-    <div class="container mt-3">
-        <h6 class="fw-bold mb-3 text-secondary">Pizzas</h6>
 
-        <div class="item-row">
-            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=200" class="item-img">
-            <div class="item-info">
-                <div class="item-name">Pepperoni Supreme</div>
-                <div class="item-price">$14.00</div>
-            </div>
-            <button class="btn-add"><i class="bi bi-plus-lg"></i></button>
-        </div>
-
-        <h6 class="fw-bold mt-4 mb-3 text-secondary">Bebidas</h6>
-
-        <div class="item-row">
-            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=500" class="item-img">
-            <div class="item-info">
-                <div class="item-name">Limonada de Coco</div>
-                <div class="item-price">$4.50</div>
-            </div>
-            <button class="btn-add"><i class="bi bi-plus-lg"></i></button>
-        </div>
-    </div>
 
 
 <?php
@@ -73,7 +81,16 @@ if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
 } else if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
     include 'error.php';
 } else if (isset($_GET['n']) && isset($_GET['m']) && isset($_GET['u'])) {
-    include 'error.php';        
+    include 'error.php';
 } else {
     include 'index.php';
 }
+?>
+
+<script>
+    function selectCategory(element) {
+        const categories = document.querySelectorAll('.cat-item');
+        categories.forEach(cat => cat.classList.remove('active'));
+        element.classList.add('active');
+    }
+</script>

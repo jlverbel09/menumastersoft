@@ -1,3 +1,6 @@
+<?php
+require_once 'db/conexion.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -16,7 +19,19 @@
 
 <body>
 
+
     <?php
+    /* DATOS DE NEGOCIO */
+    $negocio = $conexion->prepare("SELECT * FROM negocio WHERE id = :id");
+    $negocio->bindParam(':id', $_GET['n']);
+    $negocio->execute();
+    $negocio = $negocio->fetch(PDO::FETCH_ASSOC);
+    $id_negocio = $negocio['id'];
+    $nombre_negocio = $negocio['nombre'];
+
+    
+
+
     if (isset($_GET['n']) && isset($_GET['m']) && isset($_GET['u'])) :
     ?>
 
@@ -24,16 +39,16 @@
         <header class="hero-section">
             <img class="restaurante-logo" src="./assets/img/logo_arriba.png" alt="">
             <div class="d-flex align-items-center gap-3 position-absolute top-0 end-0 p-3">
-                <span class="mesa-badge">Mesa 08</span>
-               <!--  <div class="theme-toggle" id="themeBtn">
+                <span class="mesa-badge">Mesa <?php echo str_pad($_GET['m'], 2, "0", STR_PAD_LEFT); ?></span>
+                <!--  <div class="theme-toggle" id="themeBtn">
                     <i class="bi bi-moon-stars-fill"></i>
                 </div> -->
             </div>
             <!-- Reemplazar con la URL de tu imagen de logo cargada anteriormente -->
-            <img src="./assets/img/restaurante/1.png" alt="MenuMasterSoft" class="main-logo">
+            <img src="./assets/img/restaurante/<?php echo $id_negocio; ?>.png" alt="MenuMasterSoft" class="main-logo">
             <div class="welcome-text">
                 <h1>¡Hola! <?= ucwords($_GET['u']) ?> Bienvenido</h1>
-                <p><i class="bi bi-geo-alt-fill me-1"></i> Restaurante "Nazca" - Mesa 08</p>
+                <p><i class="bi bi-geo-alt-fill me-1"></i> Restaurante "<?= $nombre_negocio ?>" - Mesa <?php echo str_pad($_GET['m'], 2, "0", STR_PAD_LEFT); ?></p>
             </div>
         </header>
 
@@ -54,17 +69,17 @@
     ?>
 
         <!-- Hero Header -->
-        <header class="hero-section pb-0     " style="background: none;">
+        <header class="hero-section pb-0" style="background: none;">
             <img class="restaurante-logo" src="./assets/img/logo_arriba.png" alt="">
             <div class="d-flex align-items-center gap-3 position-absolute top-0 end-0 p-3">
-                <span class="mesa-badge">Mesa 08</span>
-               <!--  <div class="theme-toggle" id="themeBtn">
+                <span class="mesa-badge">Mesa <?php echo str_pad($_GET['m'], 2, "0", STR_PAD_LEFT); ?></span>
+                <!--  <div class="theme-toggle" id="themeBtn">
                     <i class="bi bi-moon-stars-fill"></i>
                 </div> -->
             </div>
             <!-- Reemplazar con la URL de tu imagen de logo cargada anteriormente -->
             <img src="./assets/img/restaurante/1.png" alt="MenuMasterSoft" class="main-logo">
-           
+
         </header>
 
     <?php
