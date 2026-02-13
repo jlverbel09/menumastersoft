@@ -3,10 +3,8 @@
 include 'header.php';
 if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
 ?>
-
-
     <!-- bienvenida  -->
-    <form action="index.php?n=<?= $_GET['n'] ?>&m=<?= $_GET['m'] ?>&u=<?= $_GET['u'] ?? '' ?>" method="GET">
+    <form action="index.php?n=<?= $_GET['n'] ?>&m=<?= $_GET['m'] ?>&u=<?= $_GET['u'] ?? '' ?>" method="GET" id="formulario">
         <input type="text" name="n" value="<?= $_GET['n'] ?>" hidden>
         <input type="text" name="m" value="<?= $_GET['m'] ?>" hidden>
         <div class="container mt-5 text-center ">
@@ -15,23 +13,28 @@ if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
             <div class="search-box d-flex justify-content-center mt-4">
                 <div class="search-input-wrapper">
                     <i class="bi bi-person"></i>
-                    <input required type="text" name="u" placeholder="¿Cuál es tu nombre?">
+                    <input required type="text" id="u" name="u" placeholder="¿Cuál es tu nombre?">
                 </div>
             </div>
-            <button id="btn-toggle" class="btn btn-primary px-4 py-2 mt-3" style="background-color: var(--color-principal); border: none; border-radius: 12px;">
+            <button id="btn-toggle" onclick="acceder()" type="button" class="btn btn-primary px-4 py-2 mt-3" style="background-color: var(--color-principal); border: none; border-radius: 12px;">
                 Ver Menú Digital
             </button>
+
         </div>
     </form>
 <?php
 
 } else if (isset($_GET['n']) && isset($_GET['m']) && isset($_GET['u'])) {
+
+?>
+    <?php
+
     /* DATOS DE CATEGORIA */
     $categoria = $conexion->prepare("SELECT * FROM categoria WHERE id_negocio = :id_negocio");
     $categoria->bindParam(':id_negocio', $_GET['n']);
     $categoria->execute();
     $categoria = $categoria->fetchAll(PDO::FETCH_ASSOC);
-?>
+    ?>
 
     <!-- categorias -->
     <div class="categories-wrapper">
@@ -73,9 +76,23 @@ if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
     <!-- contenido -->
 
 
+    <script>
+        function selectCategory(element) {
+            const categories = document.querySelectorAll('.cat-item');
+            categories.forEach(cat => cat.classList.remove('active'));
+            element.classList.add('active');
+        }
+    </script>
+    <script src="./assets/js/jquery.js"></script>
+
+    <?php
+    include 'carrito.php';
+    ?>
+
+    <div class="m-5 p-1"></div>
 
 <?php
-    include 'footer.php';
+    include 'main.php';
 } else if (!isset($_GET['n']) || !isset($_GET['m'])) {
     include 'error.php';
 } else if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
@@ -85,12 +102,7 @@ if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
 } else {
     include 'index.php';
 }
-?>
 
-<script>
-    function selectCategory(element) {
-        const categories = document.querySelectorAll('.cat-item');
-        categories.forEach(cat => cat.classList.remove('active'));
-        element.classList.add('active');
-    }
-</script>
+
+include 'footer.php';
+?>

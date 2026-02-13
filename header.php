@@ -19,6 +19,12 @@ require_once 'db/conexion.php';
 
 <body id="contenido">
 
+<div class="protector" id="protector">
+    <div class="fullpantalla"></div>
+    <h1>Accede a la pantalla completa para vivir una mejor experiencia!</h1>
+    <button class="btn-add " id="fullpantalla2"> <i  class="bi bi-arrows-fullscreen "></i></button>
+</div>    
+
 
     <?php
     /* DATOS DE NEGOCIO */
@@ -43,6 +49,10 @@ require_once 'db/conexion.php';
                 <!--  <div class="theme-toggle" id="themeBtn">
                     <i class="bi bi-moon-stars-fill"></i>
                 </div> -->
+                  <a class="nav-link pe-2" href="#" id="btnFullscreen" role="button">
+                        <i id="icon-maximize" class="bi bi-arrows-fullscreen "></i>
+                        <i id="icon-minimize" class="bi bi-fullscreen-exit " style="display: none;"></i>
+                    </a>
             </div>
             <!-- Reemplazar con la URL de tu imagen de logo cargada anteriormente -->
             <img src="./assets/img/restaurante/<?php echo $id_negocio; ?>.png" alt="MenuMasterSoft" class="main-logo">
