@@ -1,4 +1,4 @@
-function contenidoCarrito(){
+function contenidoCarrito() {
     $('.carrito-btn').css('display', 'flex');
     $('.contenido-carrito').css('opacity', '1').animate({ opacity: 0 }, 500);
     setTimeout(function () {
@@ -39,6 +39,9 @@ if (document.getElementById('btnFullscreen')) {
         }
     });
 
+}
+
+if (document.getElementById('fullpantalla2')) {
     document.getElementById('fullpantalla2').addEventListener('click', function (e) {
         e.preventDefault();
 
@@ -58,7 +61,6 @@ if (document.getElementById('btnFullscreen')) {
         }
     });
 }
-
 
 
 

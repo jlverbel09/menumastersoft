@@ -18,12 +18,17 @@ require_once 'db/conexion.php';
 </head>
 
 <body id="contenido">
-
-<div class="protector" id="protector">
-    <div class="fullpantalla"></div>
-    <h1>Accede a la pantalla completa para vivir una mejor experiencia!</h1>
-    <button class="btn-add " id="fullpantalla2"> <i  class="bi bi-arrows-fullscreen "></i></button>
-</div>    
+    <?php
+    if (isset($_GET['n']) && isset($_GET['m']) && $_GET['n'] == 7 && $_GET['m'] != 0) :
+    ?>
+        <div class="protector" id="protector">
+            <div class="fullpantalla"></div>
+            <h1>Accede a la pantalla completa para vivir una mejor experiencia!</h1>
+            <button class="btn-add " id="fullpantalla2"> <i class="bi bi-arrows-fullscreen "></i></button>
+        </div>
+    <?php
+    endif;
+    ?>
 
 
     <?php
@@ -35,7 +40,7 @@ require_once 'db/conexion.php';
     $id_negocio = $negocio['id'];
     $nombre_negocio = $negocio['nombre'];
 
-    
+
 
 
     if (isset($_GET['n']) && isset($_GET['m']) && isset($_GET['u'])) :
@@ -49,10 +54,10 @@ require_once 'db/conexion.php';
                 <!--  <div class="theme-toggle" id="themeBtn">
                     <i class="bi bi-moon-stars-fill"></i>
                 </div> -->
-                  <a class="nav-link pe-2" href="#" id="btnFullscreen" role="button">
-                        <i id="icon-maximize" class="bi bi-arrows-fullscreen "></i>
-                        <i id="icon-minimize" class="bi bi-fullscreen-exit " style="display: none;"></i>
-                    </a>
+                <a class="nav-link pe-2" href="#" id="btnFullscreen" role="button">
+                    <i id="icon-maximize" class="bi bi-arrows-fullscreen "></i>
+                    <i id="icon-minimize" class="bi bi-fullscreen-exit " style="display: none;"></i>
+                </a>
             </div>
             <!-- Reemplazar con la URL de tu imagen de logo cargada anteriormente -->
             <img src="./assets/img/restaurante/<?php echo $id_negocio; ?>.png" alt="MenuMasterSoft" class="main-logo">
