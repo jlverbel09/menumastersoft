@@ -18,17 +18,7 @@ require_once 'db/conexion.php';
 </head>
 
 <body id="contenido">
-    <?php
-    if (isset($_GET['n']) && isset($_GET['m']) && $_GET['n'] == 7 && $_GET['m'] != 0) :
-    ?>
-        <div class="protector" id="protector">
-            <div class="fullpantalla"></div>
-            <h1>Accede a la pantalla completa para vivir una mejor experiencia!</h1>
-            <button class="btn-add " id="fullpantalla2"> <i class="bi bi-arrows-fullscreen "></i></button>
-        </div>
-    <?php
-    endif;
-    ?>
+   
 
 
     <?php
@@ -45,7 +35,17 @@ require_once 'db/conexion.php';
 
     if (isset($_GET['n']) && isset($_GET['m']) && isset($_GET['u'])) :
     ?>
-
+ <?php
+    if (isset($_GET['n']) && isset($_GET['m']) && $_GET['n'] == 7 && $_GET['m'] != 0) :
+    ?>
+        <div class="protector" id="protector">
+            <div class="fullpantalla"></div>
+            <h1>Accede a la pantalla completa para vivir una mejor experiencia!</h1>
+            <button class="btn-add " id="fullpantalla2"> <i class="bi bi-arrows-fullscreen "></i></button>
+        </div>
+    <?php
+    endif;
+    ?>
         <!-- Hero Header -->
         <header class="hero-section">
             <img class="restaurante-logo" src="./assets/img/logo_arriba.png" alt="">
