@@ -68,7 +68,7 @@ if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
                 <div class="item-info">
                     <div class="item-name"><?= ucwords(strtolower($prod['nombre'])) ?></div>
                     <div class="item-price fw-bold">$<?= number_format($prod['precio'], 2) ?></div>
-                </div> <button class="btn-add" onclick="addToCart('<?= $prod['id'] ?>', '<?= $prod['nombre'] ?>', <?= $prod['precio'] ?>, '<?= $prod['img_url'] ?>')"><i class="bi bi-plus-lg"></i></button>
+                </div> <button type="button" class="btn-add" onclick="addToCart('<?= $prod['id'] ?>', '<?= $prod['nombre'] ?>', <?= $prod['precio'] ?>, '<?= $prod['img_url'] ?>')"><i class="bi bi-plus-lg"></i></button>
             </div>
         </div>
 
