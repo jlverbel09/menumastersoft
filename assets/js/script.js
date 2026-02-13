@@ -21,7 +21,7 @@ function addToCart(idproducto, nombre, precioProducto, foto) {
 }
 function verCarrito() {
 
-    let contenido = '<h3 class="text-center w-100">Mi Pedido</h3>';
+    let contenido = '<div class="cabeceraPedido"><h3 class="text-center m-0">Mi Pedido</h3><button class="btn-add btn-lg border h2 m-0"><i class="bi bi-x-circle"></i></button></div>';
     carrito.forEach(item => {
 
         contenido += `<div class="item-row"> <img src="${item.foto}" class="item-img">

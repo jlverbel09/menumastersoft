@@ -333,7 +333,7 @@ body {
 
 .contenido-carrito {
     position: fixed;
-    bottom: 139px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     background: white;
@@ -342,10 +342,25 @@ body {
     padding: 20px;
     border-radius: 15px;
     z-index: 1002;
-    height: calc(100% - 145px);
-    box-shadow: 0 0 8px 0 #0984e3;
+    height: calc(100% - 18px);
+    box-shadow: 0 0 8px 0 var(--color-principal);
     display: none;
     overflow: scroll;
+    padding-top: 12%;
+}
+
+.contenido-carrito .cabeceraPedido {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 7%;
+    align-items: center;
+    display: flex;
+    color: white;
+    background-color: #158ae4;
+    padding: 8px;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .contenido-carrito h4 {
