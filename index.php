@@ -7,8 +7,8 @@ if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
     <form action="index.php?n=<?= $_GET['n'] ?>&m=<?= $_GET['m'] ?>&u=<?= $_GET['u'] ?? '' ?>" method="GET" id="formulario">
         <input type="text" name="n" value="<?= $_GET['n'] ?>" hidden>
         <input type="text" name="m" value="<?= $_GET['m'] ?>" hidden>
-        <div class="container mt-5 text-center ">
-            <h2 class="fw-bold">Bienvenido a MenuMasterSoft</h2>
+        <div class="container mt-5 text-center  pt-5">
+            <h2 class="fw-bold mx-3">Bienvenido a <?= $nombre_negocio ?></h2>
             <p class="text-muted">Escanea, Pide y Disfruta.</p>
             <div class="search-box d-flex justify-content-center mt-4">
                 <div class="search-input-wrapper">
@@ -38,9 +38,9 @@ if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
 
     <!-- categorias -->
     <div class="categories-wrapper">
-        <div class="cat-item active">🔥 Populares</div>
+        <div class="cat-item active"  onclick="selectCategory(this)">🔥 Todos</div>
         <?php foreach ($categoria as $cat) : ?>
-            <div class="cat-item" onclick="selectCategory(this)">🔥<?= ucfirst(strtolower($cat['nombre'])) ?></div>
+            <div class="cat-item"  onclick="selectCategory(this,'<?= strtolower($cat['real']) ?>')">🔥<?= ucfirst(strtolower($cat['nombre'])) ?></div>
         <?php endforeach; ?>
     </div>
 
@@ -58,7 +58,7 @@ if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
     foreach ($producto as $prod) :
 
     ?>
-        <div class="container mt-3">
+        <div class="container mt-3 listProductos <?= $prod['categoria'] ?>">
             <?php if ($prod['categoria'] != $categorias) : ?>
                 <h6 class="fw-bold mb-3 text-secondary"><?= strtoupper($prod['categoria']) ?></h6>
             <?php endif; ?>
@@ -75,15 +75,7 @@ if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
     <?php endforeach; ?>
     <!-- contenido -->
 
-
-    <script>
-        function selectCategory(element) {
-            const categories = document.querySelectorAll('.cat-item');
-            categories.forEach(cat => cat.classList.remove('active'));
-            element.classList.add('active');
-        }
-    </script>
-    <script src="./assets/js/jquery.js"></script>
+    <script src="./assets/js/acciones.js"></script>
 
     <?php
     include 'carrito.php';

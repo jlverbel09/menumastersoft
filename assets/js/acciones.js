@@ -1,11 +1,29 @@
-function contenidoCarrito() {
-    $('.carrito-btn').css('display', 'flex');
+function cerrarCarrito() {
     $('.contenido-carrito').css('opacity', '1').animate({ opacity: 0 }, 500);
     setTimeout(function () {
         $('#contenido-carrito').css('display', 'none');
     }, 500);
 }
+function selectCategory(element, categoria = '') {
+    const categories = document.querySelectorAll('.cat-item');
+    categories.forEach(cat => cat.classList.remove('active'));
+    element.classList.add('active');
 
+    if (!categoria == '') {
+        $('.listProductos').css('display', 'none')
+        $('.' + categoria).show();
+    } else {
+        $('.listProductos').css('display', 'block')
+    }
+}
+
+function llamarMesero(idMesa) {
+    alert('llamando mesero, mesa #'+idMesa)
+}
+
+function enviarMiCarrito() {
+    alert('carrito enviado')
+}
 
 
 function acceder() {
@@ -62,8 +80,6 @@ if (document.getElementById('fullpantalla2')) {
     });
 }
 
-
-
 // Escuchar cambios (por si el usuario presiona ESC)
 document.addEventListener('fullscreenchange', () => {
 
@@ -76,3 +92,22 @@ document.addEventListener('fullscreenchange', () => {
     }
 
 });
+
+if($("#buscadorClasesProductos").length > 0 ) {
+
+
+    $("#buscadorClasesProductos").on("keyup", function () {
+        var valorBusqueda = $(this).val().toLowerCase();
+
+        $(".listProductos").each(function () {
+            var textoElemento = $(this).text().toLowerCase();
+            // Si el texto coincide
+            if (textoElemento.indexOf(valorBusqueda) > -1) {
+                $(this).fadeIn(300); // Aparece suavemente en 300ms
+            } else {
+                $(this).fadeOut(300); // Desaparece suavemente en 300ms
+            }
+        });
+
+    });
+}

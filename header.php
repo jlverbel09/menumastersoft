@@ -71,7 +71,7 @@ require_once 'db/conexion.php';
         <div class="search-box">
             <div class="search-input-wrapper">
                 <i class="bi bi-search"></i>
-                <input type="text" placeholder="¿Qué se te antoja hoy?">
+                <input type="text" id="buscadorClasesProductos" placeholder="¿Qué se te antoja hoy?">
             </div>
         </div>
 
