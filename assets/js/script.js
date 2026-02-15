@@ -13,7 +13,7 @@ function addToCart(idproducto, nombre, precioProducto, foto) {
     precio += precioProducto;
     if (contador > 0) {
         $('.carrito-btn').css('display', 'flex');
-        $('.carrito-btn.carrito-pedido span').eq(0).html('<i class="bi bi-send me-2"></i> Mi Pedido (' + contador + ')');
+        $('.carrito-btn.carrito-pedido span').eq(0).html('<i class="bi bi-bag-check-fill me-2"></i> Mi Pedido (' + contador + ')');
         $('.carrito-btn.carrito-enviar span').eq(0).html('<i class="bi bi-send me-2"></i> <b>Enviar Pedido a cocina</b> (' + contador + ')');
         $('.carrito-btn.carrito-pedido span').eq(1).html('$' + precio.toFixed(2));
         $('.carrito-btn.carrito-enviar span').eq(1).html('$' + precio.toFixed(2));
@@ -30,7 +30,7 @@ function deleteFromCart(idproducto, nombre, precioProducto, foto) {
     precio -= precioProducto;
     if (contador > 0) {
         $('.carrito-btn').css('display', 'flex');
-        $('.carrito-btn.carrito-pedido span').eq(0).html('<i class="bi bi-send me-2"></i> Mi Pedido (' + contador + ')');
+        $('.carrito-btn.carrito-pedido span').eq(0).html('<i class="bi bi-bag-check-fill me-2"></i> Mi Pedido (' + contador + ')');
         $('.carrito-btn.carrito-enviar span').eq(0).html('<i class="bi bi-send me-2"></i> <b>Enviar Pedido a cocina</b> (' + contador + ')');
         $('.carrito-btn.carrito-pedido span').eq(1).html('$' + precio.toFixed(2));
         $('.carrito-btn.carrito-enviar span').eq(1).html('$' + precio.toFixed(2));

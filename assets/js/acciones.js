@@ -18,11 +18,56 @@ function selectCategory(element, categoria = '') {
 }
 
 function llamarMesero(idMesa) {
-    alert('llamando mesero, mesa #'+idMesa)
+    Swal.fire({
+        title: 'Llamar a mi mesero<br> mesa #' + idMesa,
+        text: "(Llamar en caso especial)",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, LLamar",
+        cancelButtonText: "No, Cancelar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "LLamando Mesero!",
+                text: "LLamando, en un momento se acercara",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    });
+
+
 }
 
 function enviarMiCarrito() {
-    alert('carrito enviado')
+    Swal.fire({
+        title: 'Listo?',
+        text: "Se enviará su pedido a cocina",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, Enviar",
+        cancelButtonText: "Aún no"
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            carrito = [];
+
+
+cerrarCarrito()
+            Swal.fire({
+                title: "Pedido enviado a Cocina",
+                text: "Gracias!",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    });
 }
 
 
@@ -93,7 +138,7 @@ document.addEventListener('fullscreenchange', () => {
 
 });
 
-if($("#buscadorClasesProductos").length > 0 ) {
+if ($("#buscadorClasesProductos").length > 0) {
 
 
     $("#buscadorClasesProductos").on("keyup", function () {

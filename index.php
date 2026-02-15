@@ -52,8 +52,6 @@ if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
     $producto->bindParam(':id_negocio', $_GET['n']);
     $producto->execute();
     $producto = $producto->fetchAll(PDO::FETCH_ASSOC);
-
-
     $categorias = '';
     foreach ($producto as $prod) :
 
@@ -66,7 +64,7 @@ if (isset($_GET['n']) && isset($_GET['m']) && !isset($_GET['u'])) {
 
             <div class="item-row"> <img src="<?= $prod['img_url'] ?>" class="item-img">
                 <div class="item-info">
-                    <div class="item-name"><?= ucwords(strtolower($prod['nombre'])) ?></div>
+                    <div class="item-name"><?= ucwords(mb_strtolower($prod['nombre'], 'UTF-8')) ?></div>
                     <div class="item-price fw-bold">$<?= number_format($prod['precio'], 2) ?></div>
                 </div> <button type="button" class="btn-add" onclick="addToCart('<?= $prod['id'] ?>', '<?= $prod['nombre'] ?>', <?= $prod['precio'] ?>, '<?= $prod['img_url'] ?>')"><i class="bi bi-plus-lg"></i></button>
             </div>
